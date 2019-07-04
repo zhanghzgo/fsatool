@@ -1,2 +1,2 @@
-# CSATOOL
-A  useful tool for conformational sampling and analysis
+# FSATOOL
+A useful tool for fast sampling and analysis for biomolecules
