@@ -1,2 +1,2 @@
 # FSATOOL
-A useful tool for fast sampling and analysis for biomolecules
+A fast sampling and analysis tool for biomolecules
