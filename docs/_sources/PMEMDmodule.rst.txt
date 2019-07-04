@@ -1,0 +1,3 @@
+SAMPLING module
+=========================
+This module use the AMBER `PMEMD` module and our own  method to accelerate sampling

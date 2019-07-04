@@ -1,0 +1,187 @@
+MSM
+==================
+
+This module runs MSM, and contains the *msm*, *trajs* namelist.
+
+.. the example of input file for MSM describe below ::
+
+msm namelist
+-----------------
+
+The *msm* namelist has following parameters
+
+Necessary Parameters
+
+------------
+
+    :ndim: **integer** the number of collective variables (dimension) to run the msm
+    :ncluster: **integer** the number of microstates(cluster number) to run cluster
+    :lagstep: **integer**  The lag step of building msm
+    :nstate: **integer** the number of macrostates to do the coarse grain
+    :ifreadcoor: **logical** If true, read the trajs from &traj namelist; if false, read the information from the cluster result
+
+Optional Parameters
+
+------------
+
+    :clustermethod: **character** The cluster method. Default cluster method is "kmeans++"  :cite:`arthur2007k`, the other method "kmedoids" :cite:`park2009simple` is supported.
+    :clustercycle: **integer** The maximum number of iteration to perform cluster. Default number is 600. 
+    :cutnumber: **integer** Strip the cluster which has number less than the cutnumber. Default is zero which means doesn't strip any cluster.
+    :lumpingmethod: **character** The lumping method to do the coarse grain. Default method is "pccaplus" :cite:`roblitz2013fuzzy`. The "bace" method :cite:`Bowman2012` is supported.
+    :tpmmethod: **character** The method of how to build the MSM microstate transition matrix. Default method is "reversible", which use the maximum likelihood probability method :cite:`Bowman2009`. The other method, "normal" simpliy count the transition times from a cluster to another cluster divided by the counts in the cluster. The "non-reversible" method aggregates counts from cluster *i* to cluster *j* and counts from cluster *j* to cluster *i*. The total counts then divided by 2 and counts in the cluster. The code of this process shows below:
+
+        .. code-block:: fortran
+
+            temp = (tcm(i, j) + tcm(j, i))*0.5d0
+            tpm(i, j) = temp/sum(tcm(i, :))
+
+trajs namelist
+------------------------------
+
+Specify the parameters for input trajectory
+
+Necessary Parameters
+
+---------------
+
+    :ncv: **integer** The dimension of collective variables in the input trajectory.
+    :ss2cv: **array of integer** The index of collective variables that used to build msm. The number of index must  be equal to the  *ndim* parameter in the *msm* namelist
+    :cvfiles: **array of character** The input file's name which contains the collective variables. The order of file must follow the increased temperature.
+    :kelvinarray: **array of double precision** If the *kelvinarray* parameter has only one value, then all the input file has same temperature. If the *kelevinarray* parameter has multiple values, then the *numFileLevel* parameter must be specifed
+    :numFileLevel: **array of integer** If the *kelvinarray* has only one value, then this parameter dosen't need to be specifed. Else, the number of file in each temperature needs to be declared. 
+
+
+Optional Parameters
+
+------------------
+
+    :trajtype: **integer** This variable specify the type of trajectory. Default value is 2, the only collective variable trajectory type (trajtype = 2) is supported now. Later other types of trajectory may be added. 
+    :framestride: **integer**  The frame stride of trajectory to be read into the MSM. Default value is 1.
+
+Example 
+----------------
+
+The example of input file for MSM analyze shows below ::
+
+    &msm
+        ncv=2, 
+        ncluster=800, 
+        lagstep=20, 
+        nstate=12, 
+        ifreadcoor=.true.
+    /
+
+    &trajs
+        kelvinarray=300
+        ndim=2
+        ss2cv=1,2
+        cvfiles="sim1/cvfile", "sim2/cvfile"
+    /
+
+Input File Format
+-------------------
+
+In the *trajs* namelist, we need to specify the collective variables files. The format of file shows below
+
+===========   ====  =====  ========
+traj index    cv 1  cv 2   cv ...
+===========   ====  =====  ========
+1             0.2   22.3   15.2 ...
+1             0.3   22.4   19.2 ...
+1             0.21  22.5   23.2 ...
+1             0.22  23.3   24.2 ...
+1             0.23  24.3   26.2 ...
+...           ...   ...    ...  ...
+===========   ====  =====  ========
+
+- **traj index** : *integer* Specify the trajectory index. When the trajectory is break at certain point, the *traj index* must be changed, the same index means the continuous trajectory.
+- **cv** : *double precision*  The cv coordinates
+
+Output File
+----------------
+After running MSM, there are several output files. There are putting into the info directory
+
+1. *clusters.txt* This file specify the cluster result. It has the following format:
+
+===========  =============  ==========  =====  =====  ===
+frame index  cluster index  traj index  CV 1   CV 2   ...
+===========  =============  ==========  =====  =====  ===
+    2922       1            971         14.5   6.50   ...
+    2963       1            971         14.7   6.51   ...
+    3024       1            990         14.3   6.46   ...
+    3046       1            990         14.6   6.57   ... 
+    3047       1            990         14.4   6.60   ...
+    3089       1            1018        14.4   6.32   ...
+===========  =============  ==========  =====  =====  ===
+
+    - **frame index** : frame index
+    - **cluster index** : cluster index of the frame belong to
+    - **traj index** : trajectory index
+    - **CV**: collective variables variables
+
+2. *clusterindex.txt* cluster result, the header of three numbers specify the number of cluster, the number of frames. This file needs *clusters.txt* to get a complete result
+
+=============  ========== ================  ====================  =================
+cluster index  end frames number of frames  center cluster index  center cluster cv
+=============  ========== ================  ====================  =================
+ 1             1416         1416            9446                  14.6190,   6.499
+ 2             1507         91              133288                20.4610,  19.542
+ 3             1671         164             124050                2.98000,  23.116
+ 4             2301         630             167108                9.95400,  10.602
+ 5             2852         551             110019                4.71500,  15.760
+ 6             3236         384             121381                9.30700,  15.891
+=============  ========== ================  ====================  =================
+
+    - **cluster index** : cluster  index
+    - **end frames** : the end frame index of this cluster. For example, in the table above, the cluster index 1 has the frame index of 1-1416. The cluster index 4 has the frame index 1672-2301. This start (i) and end (j) frame index correspond to the ith line and jth line in the *clusters.txt* file
+    - **number of frames** : number of frames in this cluster
+    - **center cluster index** : center cluster index
+    - **center cluster cv** : center cluster collective variable coordinates
+
+3. *cluster_forcheck.txt*: Input file for computing timescales on each lagstep upon the cluster result.
+
+=============   ==========
+cluster index   traj index
+=============   ==========
+    17          1
+    17          1
+    17          1
+    17          1
+    17          1
+    30          2
+    30          2
+=============   ==========
+
+    - **cluster index** : cluster index
+    - **traj index**    : trajectory index
+
+
+4. *states.txt*: Coarse grain results
+
+===========  =============  ==========================  =================
+state index  cluster index  center cluster frame index  center cluster cv
+===========  =============  ==========================  =================
+       1     107            191218                      27.774,  2.581
+       1     284            266                         26.188 , 1.474
+       2       2            133288                      20.461, 19.542
+       2      89            136689                      18.140,  16.989
+       2     123            136208                      21.756, 15.047
+       2     159            135510                      21.781,  12.424
+===========  =============  ==========================  =================
+
+5. *stateindex.txt* Coarse grain results, combine with the *states.txt* file to get a complete result
+
+===========
+
+
+Run the msm command
+----------------------
+
+There are several ways to run the `msm` command. Default input file is "msm.in"， and default output directory is "info/". 
+The user can provide the input file by `-i` with input file, and `-o` with output directory. The program run `msm` default.
+
+.. code-block:: bash
+
+    ./msm.x msm -i msm.in -o msm_result
+    ./msm.x 
+    ./msm.x msm

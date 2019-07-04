@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cluster &mdash; simpack 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lumping" href="lumping.html" />
+    <link rel="prev" title="Check" href="check.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> simpack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../PMEMDmodule.html">SAMPLING module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">MSM module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="msm.html">MSM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="check.html">Check</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Cluster</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cluster-namelist"><cite>cluster</cite> namelist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-file-format">Input File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-file-format">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-the-cluster-command">Run the <cite>cluster</cite> command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lumping.html">Lumping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpt.html">TPT</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">View module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">simpack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">MSM module</a> &raquo;</li>
+        
+      <li>Cluster</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/MSMmodule/cluster.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cluster">
+<h1>Cluster<a class="headerlink" href="#cluster" title="Permalink to this headline">¶</a></h1>
+<p>The software supports two different kinds of cluster method. The “kmeans++”, and “kmedoids” methods.</p>
+<div class="section" id="cluster-namelist">
+<h2><cite>cluster</cite> namelist<a class="headerlink" href="#cluster-namelist" title="Permalink to this headline">¶</a></h2>
+<p>The check namelist has following parameters:</p>
+<p>Necessary Parameters</p>
+<hr class="docutils" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">ncluster:</th><td class="field-body"><strong>integer</strong> The cluster number needed to be specified first when dealing with clustering</td>
+</tr>
+<tr class="field-even field"><th class="field-name">clustermethod:</th><td class="field-body"><strong>characther</strong> The clustermethod, supports two kinds method: “kmeans” and “kmedoids”</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">datafile:</th><td class="field-body"><strong>characther</strong> The data file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ndim:</th><td class="field-body"><strong>integer</strong> The dimension of data file</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">nsnap:</th><td class="field-body"><strong>nsnap</strong> The frames(snaps) of data</td>
+</tr>
+</tbody>
+</table>
+<p>Optional Parameters</p>
+<hr class="docutils" />
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">clustercycle:</th><td class="field-body">the maximum number of steps to do the clustering</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The example of cluster namelist shows below</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">cluster</span>
+    <span class="n">ncluster</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">clustercycle</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="n">clustermethod</span><span class="o">=</span><span class="s2">&quot;kmeans&quot;</span><span class="p">,</span>
+    <span class="n">datafile</span><span class="o">=</span><span class="s2">&quot;data.txt&quot;</span><span class="p">,</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">nsnap</span> <span class="o">=</span> <span class="mi">100000</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-file-format">
+<h2>Input File Format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="39%" />
+<col width="23%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">CV1</th>
+<th class="head">CV2</th>
+<th class="head">…</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1.87</td>
+<td>2.03</td>
+<td>…</td>
+</tr>
+<tr class="row-odd"><td>-0.84</td>
+<td>0.22</td>
+<td>…</td>
+</tr>
+<tr class="row-even"><td>0.14</td>
+<td>0.71</td>
+<td>…</td>
+</tr>
+<tr class="row-odd"><td>-9.37</td>
+<td>-0.19</td>
+<td>…</td>
+</tr>
+<tr class="row-even"><td>0.75</td>
+<td>-0.32</td>
+<td>…</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><ul class="simple">
+<li>CV : collective variable  coordinates</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">cluster index</th>
+<th class="head">CenterSnap Index</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>51</td>
+<td>74514</td>
+</tr>
+<tr class="row-odd"><td>72</td>
+<td>65192</td>
+</tr>
+<tr class="row-even"><td>32</td>
+<td>87220</td>
+</tr>
+<tr class="row-odd"><td>73</td>
+<td>47693</td>
+</tr>
+<tr class="row-even"><td>94</td>
+<td>51648</td>
+</tr>
+<tr class="row-odd"><td>79</td>
+<td>38883</td>
+</tr>
+<tr class="row-even"><td>21</td>
+<td>23766</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><ul class="simple">
+<li><strong>cluster index</strong>: the cluser index to which the frams belongs</li>
+<li><strong>CenterSnap Index</strong>: the center snap index of current cluster</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="run-the-cluster-command">
+<h2>Run the <cite>cluster</cite> command<a class="headerlink" href="#run-the-cluster-command" title="Permalink to this headline">¶</a></h2>
+<p>There are several ways to run the <cite>cluster</cite> command. Default input file is “cluster.in”，and default output file is “cluster.out”
+The user can provide the input file by <cite>-i</cite> with input file, and <cite>-o</cite> with output file.</p>
+<p>The “kmeans” method of <cite>cluster</cite> module supports MPI, so support the number of process behind <cite>-n</cite> option when using the “kmeans” method</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./msm.x cluster
+./msm.x cluster -i file.in -o file.out
+mpirun -n <span class="m">4</span> ./msm.x cluster
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lumping.html" class="btn btn-neutral float-right" title="Lumping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="check.html" class="btn btn-neutral float-left" title="Check" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, haomiao
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
