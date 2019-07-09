@@ -1,7 +1,0 @@
-TPT
-=================
-
-In this module, the Transition Path Theory (TPT) analysis is implemented. :cite:`Noe2009`
-
-
-

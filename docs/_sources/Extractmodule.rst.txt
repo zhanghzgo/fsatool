@@ -1,3 +1,0 @@
-View module
-=================
-This module extract the macrostates pdb and other things
