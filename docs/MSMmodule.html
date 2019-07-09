@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MSM module &mdash; simpack 0.1 documentation</title>
+  <title>MSM module &mdash; FSATOOL 1.0 documentation</title>
   
 
   
@@ -47,9 +47,12 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> simpack
+            <a href="index.html" class="icon icon-home"> FSATOOL
           
 
+          
+            
+            <img src="_static/fsatool_logo.jpg" class="logo" alt="Logo"/>
           
           </a>
 
@@ -57,7 +60,7 @@
             
             
               <div class="version">
-                0.1
+                1.0
               </div>
             
           
@@ -106,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">simpack</a>
+          <a href="index.html">FSATOOL</a>
         
       </nav>
 
@@ -392,12 +395,11 @@ The implied timescale can be computed by the transition matrix’s eigenvalue, w
 <dl class="function">
 <dt id="mod_markov_symmetrizetcm_and_normalizetpm">
 <code class="descname">mod_markov_symmetrizetcm_and_normalizetpm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mod_markov_symmetrizetcm_and_normalizetpm" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>This function use maximum likelihood estimation method to get <cite>tpm</cite> and <cite>pi</cite>. In this way, the detailed balance is satisfied.</p>
+<dd><p>This function use maximum likelihood estimation method to get <cite>tpm</cite> and <cite>pi</cite>. In this way, the detailed balance is satisfied.</p>
 <div class="math">
 <p><img src="_images/math/3f536eeee5803eb255b2a1101c7a5de8430bc55d.png" alt="t_{ij}p_i = t{ji}p_j"/></p>
-</div><p>So this method is recommended for building tpm,</p>
-</div></blockquote>
+</div><p>So this method is recommended for building tpm,
+See  <a class="reference internal" href="Reference.html#chodera2010a" id="id1">[CNo10]</a> for details.</p>
 </dd></dl>
 
 <dl class="function">
@@ -446,7 +448,13 @@ what’s meaning of tperror, why deal with the rest?</p>
 <dd><p>It’s better to put these function into a Module which deal with file specificity.</p>
 </dd></dl>
 
-<p id="bibtex-bibliography-MSMmodule-0"></p>
+<p id="bibtex-bibliography-MSMmodule-0"><table class="docutils citation" frame="void" id="chodera2010a" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[CNo10]</a></td><td>John&nbsp;D. Chodera and Frank Nó. Probability distributions of molecular observables computed from Markov models. II. Uncertainties in observables and their time-evolution. <em>J. Chem. Phys.</em>, 2010. <a class="reference external" href="https://doi.org/10.1063/1.3463406">doi:10.1063/1.3463406</a>.</td></tr>
+</tbody>
+</table>
+</p>
 </div>
 </div>
 
@@ -461,7 +469,7 @@ what’s meaning of tperror, why deal with the rest?</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, haomiao
+        &copy; Copyright 2019, haomiao
 
     </p>
   </div>

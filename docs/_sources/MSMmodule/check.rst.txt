@@ -45,7 +45,7 @@ The example of input file for check shows below ::
     ncluster=300,
     lagstart=1, 
     lagend=25
-/
+    /
 
 
 Input file format

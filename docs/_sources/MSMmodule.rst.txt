@@ -137,7 +137,7 @@ This module build markov state model, and support some tools to check whether th
       t_{ij}p_i = t{ji}p_j
    
    So this method is recommended for building tpm,
-  ..  See  :cite:`Chodera2010a` for details.
+   See  :cite:`Chodera2010a` for details.
 
 .. function:: mod_markov_build_coarsetpm_from_tcm()
 
