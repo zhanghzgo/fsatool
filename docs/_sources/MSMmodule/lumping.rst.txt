@@ -1,0 +1,57 @@
+Lumping
+===================
+
+The "PCCA+" and "BACE" method are supported to do the lumping (coarse grain)
+
+`lumping` namelist
+------------------
+
+The `lumping` namelist has following parameters
+
+    :nclsuter: **Integer** The number of microstates to perform lumping procedure
+    :nstate: **Integer** The number of macrostates needs to be provided
+    :lumpingmethod:  **character** Two methods "pccaplus" and "bace" are supported
+    :datafile: **character**  If the `lumpingmethod` is "pccaplus", then the data file should contains the transition probability matrix. Else if the `lumpingmethod` is "bace", then the transtion count matrix should be provided
+
+Example
+-------------
+
+The example of cluster namelist shows below ::
+
+    &lumping
+        datafile = "tpmlarge.txt"
+        ncluster = 1000
+        nstate = 8
+        lumpingmethod = "pccaplus"
+    /
+
+
+Input File Format
+-----------------
+
+====   =====  ====   ====
+P_00   P_01   ...    P_0n
+P_10   P_11   ...    P_1n
+P_20   P_21   ...    P_2n
+...    ...    ...    ...
+P_n0   P_n1   ...    P_nn
+====   =====  ====   ====
+
+    - **P_ij** : **double precision** When the "bace" method is used, the P_ij is the transition count from cluster i to cluster j.  When the "pccaplus" method is used, the P_ij is the transition probability from cluster i to cluster j. The file has `ncluster` lines, and for each line, there are `ncluster` numbers.
+
+Output File Format
+--------------------
+
+For each line, there is a number corresponded to the macrostates index for each microstates
+
+
+Run the `lumping` command
+--------------------------
+
+There are several ways to run the `lumping` command. Default input file is "lumping.in"，and default output file is "lumping.out"
+The user can provide file by `-i` with input file, and `-o` with output file. 
+
+.. code-block:: bash
+
+    ./msm.x lumping
+    ./msm.x lumping -i file.in -o file.out
