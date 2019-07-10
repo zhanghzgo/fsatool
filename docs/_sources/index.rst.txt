@@ -1,9 +1,9 @@
-.. simpack documentation master file, created by
+.. FSATOOL documentation master file, created by
    sphinx-quickstart on Wed Aug 22 11:14:26 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to simpack's documentation!
+Welcome to FSATOOL's documentation!
 ===================================
 
 PMEMD module

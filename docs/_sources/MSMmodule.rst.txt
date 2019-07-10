@@ -106,7 +106,7 @@ This module build markov state model, and support some tools to check whether th
 
 .. function:: mod_markov_task1_impliedtimescale_vs_lagtime()
 
-   This function requires a `simpack3_msm.in` file which need a **searchlagtime** namelist. The namelist contains following variables
+   This function requires a `FSATOOL3_msm.in` file which need a **searchlagtime** namelist. The namelist contains following variables
 
 - **lagstepstart** *int* start lag time
 - **laginterval**  *int* lag time interval
