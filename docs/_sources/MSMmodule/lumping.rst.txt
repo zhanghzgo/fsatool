@@ -16,7 +16,7 @@ The `lumping` namelist has following parameters
 Example
 -------------
 
-The example of cluster namelist shows below ::
+The example of lumping namelist shows below ::
 
     &lumping
         datafile = "tpmlarge.txt"
@@ -48,7 +48,7 @@ For each line, there is a number corresponded to the macrostates index for each 
 Run the `lumping` command
 --------------------------
 
-There are several ways to run the `lumping` command. Default input file is "lumping.in"，and default output file is "lumping.out"
+Default input file is "lumping.in"，and default output file is "lumping.out"
 The user can provide file by `-i` with input file, and `-o` with output file. 
 
 .. code-block:: bash

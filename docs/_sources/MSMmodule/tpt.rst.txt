@@ -5,3 +5,72 @@ In this module, the Transition Path Theory (TPT) analysis is implemented. :cite:
 
 
 
+`tpt` namelist
+------------------
+
+The tpt namelist has following parameters:
+
+Necessary Parameters
+
+--------------------
+
+:tpmfile: **character** The transition probability matrix file which has the format of (ncluster * ncluster)
+:statefile: **character** The state index file
+:startstate: **integer** The index of start state of runing TPT analysis
+:endstate: **integer** The index of end state of runing TPT analysis
+
+
+Example
+------------
+The example of tpt namelist shows below ::
+
+    &tpt
+        tpmfile = "tpm.txt"
+        statefile = "state.txt"
+        startstate = 10
+        endstate = 8
+    /
+
+Input File Format
+-----------------
+
+1. tpm.txt file format
+
+========  =======  ===    =======
+p_{11}    p_{12}   ...    p_{1n}
+p_{21}    p_{22}   ...    p_{2n}
+...       ...      ...     ...
+p_{n1}    p_{n2}   ...    p_{nn}
+========  =======  ===    =======
+
+2. state file format (The states.txt file produced from MSM module can be used)
+
+===========  ===============
+state index  cluster index
+===========  ===============
+1             20
+1             24
+1             34
+...           ...
+2             41
+2             89
+...           ...
+nstate        212
+===========  ===============
+
+
+Output File Format
+------------------
+
+*tpt.out* Transition path theory results, it's the net flux matrix from start state to end state which has a form of (number of state * number of state)
+
+Run the `cluster` command
+--------------------------
+
+Default input file is "tpt.in"，and default output file is "tpt.out"
+The user can provide file by `-i` with input file, and `-o` with output file. 
+
+.. code-block:: bash
+
+    ./msm.x tpt
+    ./msm.x tpt -i file.in -o file.out

@@ -16,7 +16,7 @@ Necessary Parameters
 :clustermethod: **characther** The clustermethod, supports two kinds method: "kmeans" and "kmedoids"
 :datafile: **characther** The data file
 :ndim: **integer** The dimension of data file
-:nsnap: **nsnap** The frames(snaps) of data
+:nsnap: **integer** The frames(snaps) of data
 
 Optional Parameters
 

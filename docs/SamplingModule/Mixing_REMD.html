@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Mixing REMD &mdash; FSATOOL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="EDS (Essential dynamic sampling)" href="EDS.html" />
+    <link rel="prev" title="REMD (Replica Exchange Molecular Dynamics)" href="REMD.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> FSATOOL
+          
+
+          
+            
+            <img src="../_static/fsatool_logo.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Sampling module</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="REMD.html">REMD (Replica Exchange Molecular Dynamics)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Mixing REMD</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#flood-namelist">flood namelist</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#necessary-parameters">Necessary Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-file-format">Output File Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-information-about-mixing-remd">Additional Information about Mixing-REMD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EDS.html">EDS (Essential dynamic sampling)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SMD.html">SMD (Steered Molecular Dynamics)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../MSMmodule/index.html">MSM module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">Extract trajectory module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSATOOL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Sampling module</a> &raquo;</li>
+        
+      <li>Mixing REMD</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/SamplingModule/Mixing_REMD.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mixing-remd">
+<h1>Mixing REMD<a class="headerlink" href="#mixing-remd" title="Permalink to this headline">¶</a></h1>
+<p>Doing the conformation sampling using the Mixing-REMD method,
+the input file of Mixing REMD has a flood namelist and
+the collective variable format has the same format of NFE moudle in AMBER.</p>
+<div class="section" id="flood-namelist">
+<h2>flood namelist<a class="headerlink" href="#flood-namelist" title="Permalink to this headline">¶</a></h2>
+<p>The <em>flood</em> namelist has following parameters</p>
+</div>
+<div class="section" id="necessary-parameters">
+<h2>Necessary Parameters<a class="headerlink" href="#necessary-parameters" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">kelvindown:</th><td class="field-body"><strong>double precision</strong> the lowest temperature</td>
+</tr>
+<tr class="field-even field"><th class="field-name">kelvinup:</th><td class="field-body"><strong>double precision</strong> the largest temperature</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">exchangestep:</th><td class="field-body"><strong>integer</strong> the exchange step between REMD replicas, Equilibrium replica and the highest temperature replica</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ss2cv:</th><td class="field-body"><strong>array of integer</strong> specify the collective variables to do the Mixing-REMD sampling</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ssngrid:</th><td class="field-body"><strong>array of integer</strong> Specify the resolution of collective variable space for the biased replica</td>
+</tr>
+<tr class="field-even field"><th class="field-name">floodingtime:</th><td class="field-body"><strong>double precision</strong> Control the growth of biased potential. The smaller of this value, the faster growth of baised potential.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">biasrep:</th><td class="field-body"><strong>array of integer</strong> The biased replica index. If has only one biased replica, then the biased replica will do the ABMD sampling. If has multiple biased replica, then the biased replica will exchange the conformation.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">biasexc:</th><td class="field-body"><strong>integer</strong> The exchange step between biased replica and equilibrium replica. This number must multiply the <cite>exchangestep</cite> variable</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The Mixing REMD input file shows below</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&amp;task
+!  iftemd=.true.
+ifflood=.true.
+!   ifeds=.true.
+/
+
+&amp;flood
+kelvindown=300.0, kelvinup=320.0, exchangestep=1000,
+ss2cv=1,2, ssngrid=160,400, floodingtime=0.1, biasrep=1, biasexc=10
+/
+
+&amp;colvar
+cv_type = &#39;N_OF_BONDS&#39;
+cv_min=0.0, cv_max=64.0
+cv_ni= 128, cv_nr=  1
+cv_i =  19, 330,   3, 339,  19, 346,   4, 379,  15, 416,  16, 431,  13, 501,   8, 611,  31, 299,  23, 330,  23, 334,  23, 346,  41, 605,  41, 618,  57, 289,  57, 293,  43, 330,  43, 334,  49, 358,  50, 417,  54, 479,  51, 501,  47, 579,  45, 601,  51, 605,  45, 618,  65, 271,  61, 289,  61, 301,  76, 576,  59, 601,  74, 616,  73, 620,  74, 671,  73, 687,  66, 744,  96, 249,  96, 269,  78, 289,  78, 293,  88, 318,  90, 353,  92, 485,  80, 572,  80, 580, 100, 269, 102, 553,  98, 572,  98, 576, 108, 590, 112, 746, 125, 553, 117, 572, 149, 570, 158, 403, 158, 464, 162, 485, 163, 564, 204, 406, 204, 484, 271, 809, 297, 624, 304, 694, 598, 746,
+cv_r = 4.0
+/
+
+&amp;colvar
+cv_type = &#39;R_OF_GYRATION&#39;
+cv_min = 4, cv_max = 10
+cv_ni=  51, cv_nr=  0
+cv_i =    5,   22,   44,   60,   79,   99,  118,  140,  152,  168,  190,  197,  219,  226,  248,  270,  277,  292,  311,  333,  347,  363,  373,  385,  392,  413,  423,  437,  451,  471,  490,  510,  532,  549,  556,  575,  585,  604,  619,  629,  651,  657,  667,  681,  700,  722,  732,  751,  766,  776,  793,
+/
+</pre></div>
+</div>
+</div>
+<div class="section" id="output-file-format">
+<h2>Output File Format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>siminfo.txt</em></li>
+</ul>
+<p>The log file of Mixing-REMD sampling</p>
+<ul class="simple">
+<li><em>procinfo/procinfo_0.txt</em></li>
+</ul>
+<p>The process info file for each processor</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="28%" />
+<col width="23%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">time</th>
+<th class="head">process index</th>
+<th class="head">potential</th>
+<th class="head">collective variable</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2.08</td>
+<td>0</td>
+<td>-42566.812</td>
+<td>0.021   9.790</td>
+</tr>
+<tr class="row-odd"><td>2.09</td>
+<td>0</td>
+<td>-42395.676</td>
+<td>0.012  10.171</td>
+</tr>
+<tr class="row-even"><td>2.10</td>
+<td>0</td>
+<td>-42528.583</td>
+<td>0.025   9.534</td>
+</tr>
+<tr class="row-odd"><td>2.11</td>
+<td>0</td>
+<td>-42445.478</td>
+<td>0.021   9.853</td>
+</tr>
+<tr class="row-even"><td>2.12</td>
+<td>0</td>
+<td>-42563.596</td>
+<td>0.060  10.020</td>
+</tr>
+<tr class="row-odd"><td>2.13</td>
+<td>0</td>
+<td>-42421.047</td>
+<td>0.033  10.227</td>
+</tr>
+<tr class="row-even"><td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><em>procinfo/traj_0.mdcrd</em></li>
+</ul>
+<p>The trajectory file for each processor</p>
+<ul class="simple">
+<li><em>procinfo/surfacedata_0.txt</em></li>
+</ul>
+<p>The collective variable surface of each processor</p>
+<ul class="simple">
+<li><em>procinfo/kelvin_exchangerate.txt</em></li>
+</ul>
+<p>The exchange rate between each replica</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="30%" />
+<col width="25%" />
+<col width="25%" />
+<col width="13%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">time</th>
+<th class="head">average exchange rate</th>
+<th class="head">exchange rate(1,2)</th>
+<th class="head">exchange rate(2,3)</th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>10</td>
+<td>0.19</td>
+<td>0.08</td>
+<td>0.4</td>
+<td>…</td>
+</tr>
+<tr class="row-odd"><td>20</td>
+<td>0.23</td>
+<td>0.18</td>
+<td>0.2</td>
+<td>…</td>
+</tr>
+<tr class="row-even"><td>30</td>
+<td>0.24</td>
+<td>0.17</td>
+<td>0.3</td>
+<td>…</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>&#160;</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="additional-information-about-mixing-remd">
+<h2>Additional Information about Mixing-REMD<a class="headerlink" href="#additional-information-about-mixing-remd" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>When using the Mixing-REMD method, the <em>ifflood</em> in the task namelist should be set to TRUE.</li>
+<li>The mixing-REMD method could use different method to do the biased sampling, such as ABMD, EDS.</li>
+<li>The number of replicas are determined by the number of processor in the script.</li>
+<li>The compiled file pmemd.CUDA are wrapped by the MPI. So when using mixing-REMD method, the MPI must be supported.</li>
+<li>The &amp;colvar namelist must be specified in the same file of &amp;flood namelist which is different from AMBER.</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="EDS.html" class="btn btn-neutral float-right" title="EDS (Essential dynamic sampling)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="REMD.html" class="btn btn-neutral float-left" title="REMD (Replica Exchange Molecular Dynamics)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, FSATOOL Group
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

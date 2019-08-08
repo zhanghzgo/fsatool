@@ -1,0 +1,66 @@
+Transform
+===================
+
+The "PCA" and "TICA" method are supported to reduce the dimension of data
+
+`transform` namelist
+---------------------
+
+The `transform` namelist has following parameters
+
+    :datafile: **character** The data needed to do the PCA or TICA analysis
+    :transformmethod: **character** PCA or TICA
+    :nsnap:  **integer** the total number of snapshot of the data
+    :nfeature: **integer**  number of features of data
+    :ncomponent: **integer** number of component needed to be extracted
+    :lagtime: For TICA analyzing, the lagtime needs to be specified
+
+Example
+-------------
+
+The example of transform namelist shows below ::
+
+    &lumping
+        datafile = "data.txt"
+        transformmethod = "pca"
+        nsnap = 5000
+        nfeature = 2
+        ncomponent = 1
+    /
+
+
+Input File Format
+-----------------
+
+========= =========
+feature 1 feature 2
+========= =========
+-1.5      2.3
+-2.5      4.5
+...       ...
+========= =========
+
+
+Output File Format
+--------------------
+
+The data which has been mapped to the PCA or TICA space
+
+===========    ===============
+component 1    component 2
+===========    ===============
+1.2            2
+2.3            4
+...            ...
+===========    ===============
+
+Run the `transform` command
+-----------------------------
+
+Default input file is "transform.in"，and default output file is "transform.out"
+The user can provide file by `-i` with input file, and `-o` with output file. 
+
+.. code-block:: bash
+
+    ./msm.x transform
+    ./msm.x transform -i file.in -o file.out

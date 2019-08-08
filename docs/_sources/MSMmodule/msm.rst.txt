@@ -1,7 +1,7 @@
-MSM
-==================
+MSM (Markov State Model)
+===========================
 
-This module runs MSM, and contains the *msm*, *trajs* namelist.
+This module runs MSM, which contains three steps: clustering, lumping and transition path analyzing It contains the *msm*, *trajs* namelist.
 
 .. the example of input file for MSM describe below ::
 
@@ -19,6 +19,8 @@ Necessary Parameters
     :lagstep: **integer**  The lag step of building msm
     :nstate: **integer** the number of macrostates to do the coarse grain
     :ifreadcoor: **logical** If true, read the trajs from &traj namelist; if false, read the information from the cluster result
+    :startstate: **integer** The index of start state of runing TPT analysis
+    :endstate: **integer** The index of end state of runing TPT analysis
 
 Optional Parameters
 
@@ -69,6 +71,8 @@ The example of input file for MSM analyze shows below ::
         lagstep=20, 
         nstate=12, 
         ifreadcoor=.true.
+        startstate =10
+        endstate = 8
     /
 
     &trajs
@@ -169,19 +173,30 @@ state index  cluster index  center cluster frame index  center cluster cv
        2     159            135510                      21.781,  12.424
 ===========  =============  ==========================  =================
 
-5. *stateindex.txt* Coarse grain results, combine with the *states.txt* file to get a complete result
+5. *stateindex.txt* Coarse grain results, combine with the *states.txt* file to get a complete result.
+The header of three numbers specify the state number, cluster number and snapshot number
 
-===========
+===========  =============== ================= =============== ============== =========== ==============
+state index  end state index number of cluster number of snaps center cluster center snap center snap cv
+===========  =============== ================= =============== ============== =========== ==============
+         1        13                    13              7435       555            150056   5.002   2.181
+         2        33                    20              8096       175            694789  18.760   1.198
+         3        52                    19             10437       662            651615  19.193   2.201
+         4        69                    17             19840       469            317123   4.558   1.764
+         5       123                    54             37105       633             23469  10.842   0.957
+===========  =============== ================= =============== ============== =========== ==============
+
+6. *marco_net_flux.txt* Transition path theory results, it's the net flux matrix from start state to end state which has a form of (number of state * number of state)
 
 
 Run the msm command
 ----------------------
 
-There are several ways to run the `msm` command. Default input file is "msm.in"， and default output directory is "info/". 
+Default input file is "msm.in"， and default output directory is "info/". 
 The user can provide the input file by `-i` with input file, and `-o` with output directory. The program run `msm` default.
 
 .. code-block:: bash
 
     ./msm.x msm -i msm.in -o msm_result
-    ./msm.x 
+    ./msm.x
     ./msm.x msm

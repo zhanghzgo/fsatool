@@ -1,0 +1,41 @@
+REMD (Replica Exchange Molecular Dynamics)
+===========================================
+
+The FSATOOl supports Temperature-Replica Exchange Molecular Dynamics which has the `temdss` namelist    
+
+`temdss` namelist
+------------------
+
+:nkelvin: **integer** Number of replicas during the REMD
+:kelvindown: **double precision** the lowest temperature of REMD
+:kelvinup: **double precision** the highest temperature of REMD
+:kelvinbinratio: **double precision** 
+:exchangestep: **integer** The exchange step between REMD replicas
+:montensample: **integer**
+
+
+
+Example
+--------------
+
+The example file of T-REMD shows below::
+
+    &task
+    iftemd=true
+    ! ifflood=.true.
+    !   ifeds=.true.
+    /
+
+    &temdss
+    nkelvin=4, kelvindown=300.0, kelvinup=300.0
+    kelvinbinratio=1.0, exchangestep=200000, montensample=0
+    /
+
+Output File Format
+-------------------
+
+
+
+
+Additional Information about REMD
+-------------------------------------

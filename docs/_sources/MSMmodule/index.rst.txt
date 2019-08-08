@@ -5,6 +5,7 @@ MSM module
     :maxdepth: 2
 
     msm
+    transform
     check
     cluster
     lumping

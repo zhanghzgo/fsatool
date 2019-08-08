@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MSM" href="msm.html" />
-    <link rel="prev" title="SAMPLING module" href="../PMEMDmodule.html" /> 
+    <link rel="next" title="MSM (Markov State Model)" href="msm.html" />
+    <link rel="prev" title="SMD (Steered Molecular Dynamics)" href="../SamplingModule/SMD.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,11 +88,15 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../PMEMDmodule.html">SAMPLING module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../SamplingModule/index.html">Sampling module</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">MSM module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="msm.html">MSM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msm.html">MSM (Markov State Model)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="check.html">Check</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cluster.html">Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lumping.html">Lumping</a></li>
@@ -101,7 +105,7 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">View module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">Extract trajectory module</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
@@ -173,13 +177,21 @@
 <h1>MSM module<a class="headerlink" href="#msm-module" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="msm.html">MSM</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="msm.html">MSM (Markov State Model)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="msm.html#msm-namelist">msm namelist</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msm.html#trajs-namelist">trajs namelist</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msm.html#example">Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msm.html#input-file-format">Input File Format</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msm.html#output-file">Output File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="msm.html#run-the-msm-command">Run the msm command</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transform.html">Transform</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transform.html#transform-namelist"><cite>transform</cite> namelist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html#input-file-format">Input File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html#output-file-format">Output File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html#run-the-transform-command">Run the <cite>transform</cite> command</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="check.html">Check</a><ul>
@@ -206,7 +218,14 @@
 <li class="toctree-l2"><a class="reference internal" href="lumping.html#run-the-lumping-command">Run the <cite>lumping</cite> command</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="tpt.html">TPT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpt.html">TPT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tpt.html#tpt-namelist"><cite>tpt</cite> namelist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpt.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpt.html#input-file-format">Input File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpt.html#output-file-format">Output File Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tpt.html#run-the-cluster-command">Run the <cite>cluster</cite> command</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -219,10 +238,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="msm.html" class="btn btn-neutral float-right" title="MSM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="msm.html" class="btn btn-neutral float-right" title="MSM (Markov State Model)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../PMEMDmodule.html" class="btn btn-neutral float-left" title="SAMPLING module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../SamplingModule/SMD.html" class="btn btn-neutral float-left" title="SMD (Steered Molecular Dynamics)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

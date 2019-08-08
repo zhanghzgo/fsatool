@@ -88,11 +88,15 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../PMEMDmodule.html">SAMPLING module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../SamplingModule/index.html">Sampling module</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">MSM module</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="msm.html">MSM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="msm.html">MSM (Markov State Model)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="check.html">Check</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cluster.html">Cluster</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Lumping</a><ul>
@@ -108,7 +112,7 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">View module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">Extract trajectory module</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
@@ -203,7 +207,7 @@
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>The example of cluster namelist shows below</p>
+<p>The example of lumping namelist shows below</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">lumping</span>
     <span class="n">datafile</span> <span class="o">=</span> <span class="s2">&quot;tpmlarge.txt&quot;</span>
     <span class="n">ncluster</span> <span class="o">=</span> <span class="mi">1000</span>
@@ -262,7 +266,7 @@
 </div>
 <div class="section" id="run-the-lumping-command">
 <h2>Run the <cite>lumping</cite> command<a class="headerlink" href="#run-the-lumping-command" title="Permalink to this headline">¶</a></h2>
-<p>There are several ways to run the <cite>lumping</cite> command. Default input file is “lumping.in”，and default output file is “lumping.out”
+<p>Default input file is “lumping.in”，and default output file is “lumping.out”
 The user can provide file by <cite>-i</cite> with input file, and <cite>-o</cite> with output file.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./msm.x lumping
 ./msm.x lumping -i file.in -o file.out

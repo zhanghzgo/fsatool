@@ -1,0 +1,33 @@
+Installation
+================
+
+The FSATOOL is build upon the AMBER 18. The following prerequisites should be satisfied:
+
+1. Fortran compiler
+2. C++ compiler
+3. AMBER 18 Package
+4. CUDA Version of PMEMD in AMBER
+5. MPI supported
+
+
+Build From source
+-------------------
+
+1. First build of pmemd.CUDA according to the AMBER 18 package
+2. Patch file to the Amber Source File::
+
+    make patch
+3. Installation of FSATOOL::
+
+    make install
+
+
+Uninstallation
+--------------------
+
+1. Unpatch File from the AMBER Source File::
+
+    make unpatch
+2. Clean the unnecessary file::
+
+    make clean

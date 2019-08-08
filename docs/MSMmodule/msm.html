@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>MSM &mdash; FSATOOL 1.0 documentation</title>
+  <title>MSM (Markov State Model) &mdash; FSATOOL 1.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Check" href="check.html" />
+    <link rel="next" title="Transform" href="transform.html" />
     <link rel="prev" title="MSM module" href="index.html" /> 
 </head>
 
@@ -88,11 +88,14 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../PMEMDmodule.html">SAMPLING module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../SamplingModule/index.html">Sampling module</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">MSM module</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">MSM</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MSM (Markov State Model)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#msm-namelist">msm namelist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#trajs-namelist">trajs namelist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
@@ -101,6 +104,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#run-the-msm-command">Run the msm command</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="check.html">Check</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cluster.html">Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lumping.html">Lumping</a></li>
@@ -109,7 +113,7 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">View module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">Extract trajectory module</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
@@ -160,7 +164,7 @@
         
           <li><a href="index.html">MSM module</a> &raquo;</li>
         
-      <li>MSM</li>
+      <li>MSM (Markov State Model)</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,9 +183,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="msm">
-<h1>MSM<a class="headerlink" href="#msm" title="Permalink to this headline">¶</a></h1>
-<p>This module runs MSM, and contains the <em>msm</em>, <em>trajs</em> namelist.</p>
+  <div class="section" id="msm-markov-state-model">
+<h1>MSM (Markov State Model)<a class="headerlink" href="#msm-markov-state-model" title="Permalink to this headline">¶</a></h1>
+<p>This module runs MSM, which contains three steps: clustering, lumping and transition path analyzing It contains the <em>msm</em>, <em>trajs</em> namelist.</p>
 <div class="section" id="msm-namelist">
 <h2>msm namelist<a class="headerlink" href="#msm-namelist" title="Permalink to this headline">¶</a></h2>
 <p>The <em>msm</em> namelist has following parameters</p>
@@ -201,6 +205,10 @@
 <tr class="field-even field"><th class="field-name">nstate:</th><td class="field-body"><strong>integer</strong> the number of macrostates to do the coarse grain</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">ifreadcoor:</th><td class="field-body"><strong>logical</strong> If true, read the trajs from &amp;traj namelist; if false, read the information from the cluster result</td>
+</tr>
+<tr class="field-even field"><th class="field-name">startstate:</th><td class="field-body"><strong>integer</strong> The index of start state of runing TPT analysis</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">endstate:</th><td class="field-body"><strong>integer</strong> The index of end state of runing TPT analysis</td>
 </tr>
 </tbody>
 </table>
@@ -282,6 +290,8 @@
     <span class="n">lagstep</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
     <span class="n">nstate</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
     <span class="n">ifreadcoor</span><span class="o">=.</span><span class="n">true</span><span class="o">.</span>
+    <span class="n">startstate</span> <span class="o">=</span><span class="mi">10</span>
+    <span class="n">endstate</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="o">/</span>
 
 <span class="o">&amp;</span><span class="n">trajs</span>
@@ -585,14 +595,78 @@
 </tr>
 </tbody>
 </table>
-<ol class="arabic simple" start="5">
-<li><em>stateindex.txt</em> Coarse grain results, combine with the <em>states.txt</em> file to get a complete result</li>
+<p>5. <em>stateindex.txt</em> Coarse grain results, combine with the <em>states.txt</em> file to get a complete result.
+The header of three numbers specify the state number, cluster number and snapshot number</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="15%" />
+<col width="18%" />
+<col width="15%" />
+<col width="14%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">state index</th>
+<th class="head">end state index</th>
+<th class="head">number of cluster</th>
+<th class="head">number of snaps</th>
+<th class="head">center cluster</th>
+<th class="head">center snap</th>
+<th class="head">center snap cv</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>13</td>
+<td>13</td>
+<td>7435</td>
+<td>555</td>
+<td>150056</td>
+<td>5.002   2.181</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>33</td>
+<td>20</td>
+<td>8096</td>
+<td>175</td>
+<td>694789</td>
+<td>18.760   1.198</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>52</td>
+<td>19</td>
+<td>10437</td>
+<td>662</td>
+<td>651615</td>
+<td>19.193   2.201</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>69</td>
+<td>17</td>
+<td>19840</td>
+<td>469</td>
+<td>317123</td>
+<td>4.558   1.764</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>123</td>
+<td>54</td>
+<td>37105</td>
+<td>633</td>
+<td>23469</td>
+<td>10.842   0.957</td>
+</tr>
+</tbody>
+</table>
+<ol class="arabic simple" start="6">
+<li><em>marco_net_flux.txt</em> Transition path theory results, it’s the net flux matrix from start state to end state which has a form of (number of state * number of state)</li>
 </ol>
 </div>
-<hr class="docutils" />
 <div class="section" id="run-the-msm-command">
 <h2>Run the msm command<a class="headerlink" href="#run-the-msm-command" title="Permalink to this headline">¶</a></h2>
-<p>There are several ways to run the <cite>msm</cite> command. Default input file is “msm.in”， and default output directory is “info/”.
+<p>Default input file is “msm.in”， and default output directory is “info/”.
 The user can provide the input file by <cite>-i</cite> with input file, and <cite>-o</cite> with output directory. The program run <cite>msm</cite> default.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./msm.x msm -i msm.in -o msm_result
 ./msm.x
@@ -610,7 +684,7 @@ The user can provide the input file by <cite>-i</cite> with input file, and <cit
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="check.html" class="btn btn-neutral float-right" title="Check" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="transform.html" class="btn btn-neutral float-right" title="Transform" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral float-left" title="MSM module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

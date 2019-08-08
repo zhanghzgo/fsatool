@@ -1,3 +1,41 @@
-View module
-=================
-This module extract the macrostates pdb and other things
+Extract trajectory module
+===========================
+
+The output data of Mixing-REMD sampling is collected from each processor. When the exchange happens, the temperature
+at each processor is swapped. If one want to analyze the trajectory in each temperature, then the trajectory file and information file of Mixing-REMD should be extracted and distribute among each temperature.
+
+The extract module need a input file named "extracted.in" which has a "trajs" namelist
+
+
+`trajs` namelist
+-------------------
+
+:num_file: **integer** number of file of total trajectory or information file
+:procFile: **array of characers** The name of each "procinfo" file
+:ncv: **integer** number of collective variables in the "procinfo" file
+:traj_file: **array of characers** When this variables is specified, then the NETCDF format of Cartesian coordinate files are extracted among each temperature.
+
+Example
+------------
+The example of input file shows below ::
+
+    &trajs
+        num_file = 4
+        procFile = "procinfo_0.txt", "procinfo_1.txt",
+                "procinfo_2.txt", "procinfo_3.txt"
+        ncv = 2
+        trajFile = "traj_0.mdcrd", "traj_1.mdcrd",
+                "traj_2.mdcrd", "traj_3.mdcrd"
+    /
+
+Output File Format
+-------------------
+The output process file name is "levelinfo_0.txt" which has same format of "procinfo_0.txt"
+The output trajectory file name is "level_0.nc" which has same format of "traj_0.mdcrd"
+
+
+Run the extract command
+-----------------------
+
+1. The input file name must be "extract.in"
+2. When the `trajFile` is not provided, then only procFile is extracted. 

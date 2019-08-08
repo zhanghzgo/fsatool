@@ -6,11 +6,18 @@
 Welcome to FSATOOL's documentation!
 ===================================
 
-PMEMD module
+Installation
+=================
+
+.. toctree::
+    Installation
+
+
+Sampling module
 ========================
 
 .. toctree::
-   PMEMDmodule
+   SamplingModule/index
 
 
 MSM module

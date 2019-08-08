@@ -1,0 +1,103 @@
+Mixing REMD
+=======================
+
+Doing the conformation sampling using the Mixing-REMD method, 
+the input file of Mixing REMD has a flood namelist and 
+the collective variable format has the same format of NFE moudle in AMBER.
+
+flood namelist
+-----------------
+
+The *flood* namelist has following parameters
+
+Necessary Parameters
+----------------------
+
+:kelvindown: **double precision** the lowest temperature
+:kelvinup: **double precision** the largest temperature
+:exchangestep: **integer** the exchange step between REMD replicas, Equilibrium replica and the highest temperature replica
+:ss2cv: **array of integer** specify the collective variables to do the Mixing-REMD sampling
+:ssngrid: **array of integer** Specify the resolution of collective variable space for the biased replica
+:floodingtime: **double precision** Control the growth of biased potential. The smaller of this value, the faster growth of baised potential. 
+:biasrep: **array of integer** The biased replica index. If has only one biased replica, then the biased replica will do the ABMD sampling. If has multiple biased replica, then the biased replica will exchange the conformation. 
+:biasexc: **integer** The exchange step between biased replica and equilibrium replica. This number must multiply the `exchangestep` variable
+
+
+Example
+-------------------
+The Mixing REMD input file shows below ::
+
+    &task
+    !  iftemd=.true.
+    ifflood=.true.
+    !   ifeds=.true.
+    /
+
+    &flood
+    kelvindown=300.0, kelvinup=320.0, exchangestep=1000,
+    ss2cv=1,2, ssngrid=160,400, floodingtime=0.1, biasrep=1, biasexc=10
+    /
+
+    &colvar
+    cv_type = 'N_OF_BONDS'
+    cv_min=0.0, cv_max=64.0
+    cv_ni= 128, cv_nr=  1
+    cv_i =  19, 330,   3, 339,  19, 346,   4, 379,  15, 416,  16, 431,  13, 501,   8, 611,  31, 299,  23, 330,  23, 334,  23, 346,  41, 605,  41, 618,  57, 289,  57, 293,  43, 330,  43, 334,  49, 358,  50, 417,  54, 479,  51, 501,  47, 579,  45, 601,  51, 605,  45, 618,  65, 271,  61, 289,  61, 301,  76, 576,  59, 601,  74, 616,  73, 620,  74, 671,  73, 687,  66, 744,  96, 249,  96, 269,  78, 289,  78, 293,  88, 318,  90, 353,  92, 485,  80, 572,  80, 580, 100, 269, 102, 553,  98, 572,  98, 576, 108, 590, 112, 746, 125, 553, 117, 572, 149, 570, 158, 403, 158, 464, 162, 485, 163, 564, 204, 406, 204, 484, 271, 809, 297, 624, 304, 694, 598, 746,
+    cv_r = 4.0
+    /
+
+    &colvar
+    cv_type = 'R_OF_GYRATION'
+    cv_min = 4, cv_max = 10
+    cv_ni=  51, cv_nr=  0
+    cv_i =    5,   22,   44,   60,   79,   99,  118,  140,  152,  168,  190,  197,  219,  226,  248,  270,  277,  292,  311,  333,  347,  363,  373,  385,  392,  413,  423,  437,  451,  471,  490,  510,  532,  549,  556,  575,  585,  604,  619,  629,  651,  657,  667,  681,  700,  722,  732,  751,  766,  776,  793,
+    /
+
+
+Output File Format
+-------------------
+
+- *siminfo.txt* 
+The log file of Mixing-REMD sampling
+
+- *procinfo/procinfo_0.txt*
+The process info file for each processor
+
+====   =============  ===========  ===================
+time   process index   potential   collective variable
+====   =============  ===========  ===================
+2.08    0              -42566.812   0.021   9.790
+2.09    0              -42395.676   0.012  10.171
+2.10    0              -42528.583   0.025   9.534
+2.11    0              -42445.478   0.021   9.853
+2.12    0              -42563.596   0.060  10.020
+2.13    0              -42421.047   0.033  10.227
+...     ...             ...         ...
+====   =============  ===========  ===================
+
+- *procinfo/traj_0.mdcrd*
+The trajectory file for each processor
+
+- *procinfo/surfacedata_0.txt*
+The collective variable surface of each processor
+
+- *procinfo/kelvin_exchangerate.txt*
+The exchange rate between each replica
+
+=====   =====================    ==================   ==================   =========
+time    average exchange rate    exchange rate(1,2)   exchange rate(2,3)   ....
+=====   =====================    ==================   ==================   =========
+10          0.19                  0.08                  0.4                 ...
+20          0.23                  0.18                  0.2                 ...
+30          0.24                  0.17                  0.3                 ...
+...         ....                  ...                   ...                 ...
+=====   =====================    ==================   ==================   =========
+
+
+Additional Information about Mixing-REMD
+----------------------------------------
+1. When using the Mixing-REMD method, the *ifflood* in the task namelist should be set to TRUE.
+2. The mixing-REMD method could use different method to do the biased sampling, such as ABMD, EDS.
+3. The number of replicas are determined by the number of processor in the script. 
+4. The compiled file pmemd.CUDA are wrapped by the MPI. So when using mixing-REMD method, the MPI must be supported.
+5. The &colvar namelist must be specified in the same file of &flood namelist which is different from AMBER.
