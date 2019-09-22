@@ -1,2 +1,90 @@
 SMD (Steered Molecular Dynamics)
 =================================
+
+Perform Steered Molecular Dynamics along the a collect variable
+
+
+SMD namelist
+--------------
+
+:smdleadcv: **integer**  The number of collective variables that SMD peforms. In these CVs, there are only one cv is used to pull the molecular, the others is used to constrain the system.
+:smdrelaxstep: **integer** The relaxation step of the structure For the reason that first structure is not fully relaxed before performing SMD.
+:smdspeed: **double precision** the speed of the pull :math:`(\AA/ns)`
+:smdinicv: **array of integers** the initial position of CV
+:smdendcv: **double precision array** the end position of CV
+:smdk: **double precision array** the stiffness of the spring :math:`(kcal/(mol * \AA^2))`
+:smdpathfrag: **integer** the number of discrete states in the pulling coordinates
+:smdnpath: **integer** the total number of trajectory needs to be generated. When the pulling is finished, the structure comes back to the initial structure, and start pulling again. But this number is restricted by the `nstlim` parameter.
+:smdweigthfreq:
+
+Example
+-----------
+
+    The input file of the SMD shows below, the `task` namelist should set ifsmd to true. And input file contains two kinds of collective variables: one is followed the same rule as AMBER, the other CV names csacolvar is used to constrain the atom in a plane or in a line.
+
+    &task
+        ifsmd = .true.
+    /
+
+    &smd
+        smdleadcv = 3, smdrelaxstep = 0, reversefrag = 0, smdspeed = 1.0 (A/ns)
+        smdinitcv = 0, 0, 17.5, smdendcv = 0, 0, 40.5 
+        smdk = 50.0, 50.0, 50.0
+        smdpathfrag = 200
+        smdnpath = 1
+        smdweigthfreq = 1000
+    /
+
+    &colvar
+        cv_type = 'N_OF_BONDS'
+        cv_min=0.0, cv_max=64.0
+        cv_ni= 128, cv_nr=  1
+        cv_i =  19, 330,   3, 339,  19, 346,   4, 379,  15, 416,  16, 431,  13, 501,   8, 611,  31, 299,  23, 330,  23, 334,  23, 346,  41, 605,  41, 618,  57, 289,  57, 293,  43, 330,  43, 334,  49, 358,  50, 417,  54, 479,  51, 501,  47, 579,  45, 601,  51, 605,  45, 618,  65, 271,  61, 289,  61, 301,  76, 576,  59, 601,  74, 616,  73, 620,  74, 671,  73, 687,  66, 744,  96, 249,  96, 269,  78, 289,  78, 293,  88, 318,  90, 353,  92, 485,  80, 572,  80, 580, 100, 269, 102, 553,  98, 572,  98, 576, 108, 590, 112, 746, 125, 553, 117, 572, 149, 570, 158, 403, 158, 464, 162, 485, 163, 564, 204, 406, 204, 484, 271, 809, 297, 624, 304, 694, 598, 746,
+        cv_r = 4.0
+        /
+
+        &colvar
+        cv_type = 'R_OF_GYRATION'
+        cv_min = 4, cv_max = 10
+        cv_ni=  51, cv_nr=  0
+        cv_i =    5,   22,   44,   60,   79,   99,  118,  140,  152,  168,  190,  197,  219,  226,  248,  270,  277,  292,  311,  333,  347,  363,  373,  385,  392,  413,  423,  437,  451,  471,  490,  510,  532,  549,  556,  575,  585,  604,  619,  629,  651,  657,  667,  681,  700,  722,  732,  751,  766,  776,  793,
+        /
+
+        &csacolvar
+        cv_type = 'COM_DIS'
+        cv_i = 5, 12,31,0,46,62,79,
+        cv_r = 1.0, -1.0, -1.0
+        /
+
+
+Output File Format
+-------------------
+
+- *siminfo.txt*
+
+The log file of SMD sampling
+
+- *procinfo_0.txt*
+
+The information of SMD
+
+====  =============== ========== ===== ======= ========
+time   process index   potential  CV1    CV2    CV3
+====  =============== ========== ===== ======= ========
+0.00              0    -1245.197 0.533  0.683  17.789
+0.02              0    -1321.712 0.624  0.672  17.851
+0.04              0    -1241.781 0.584  0.664  17.776
+...              ...    ...       ...   ...     ...
+====  =============== ========== ===== ======= ========
+
+- *weight_1.txt*
+
+
+
+
+Additional information about using SMD
+-----------------------------------------
+
+1. There are two kinds of CV. One is the same as AMBER, the other has the features that the AMBER does not provide which has a `csacolvar` namelist. 
+    1. The 'COM_POS' cv type is used to 
+2. In SMD, there is only one CV could be regarded as the pulling CV. The other CVs are used to constrain the system

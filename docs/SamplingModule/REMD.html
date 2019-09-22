@@ -112,6 +112,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">Extract trajectory module</a></li>
 </ul>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../Visualization.html">Visualization module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visualization.html#show-representive-structure-in-a-cluster-of-states">Show representive structure in a cluster of states</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Visualization.html#plot-flux-network">Plot flux network</a></li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
 </ul>
 
@@ -198,8 +203,6 @@
 </tr>
 <tr class="field-odd field"><th class="field-name">exchangestep:</th><td class="field-body"><strong>integer</strong> The exchange step between REMD replicas</td>
 </tr>
-<tr class="field-even field"><th class="field-name">montensample:</th><td class="field-body"><strong>integer</strong></td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -214,13 +217,17 @@ iftemd=true
 
 &amp;temdss
 nkelvin=4, kelvindown=300.0, kelvinup=300.0
-kelvinbinratio=1.0, exchangestep=200000, montensample=0
+kelvinbinratio=1.0, exchangestep=200000
 /
 </pre></div>
 </div>
 </div>
 <div class="section" id="output-file-format">
 <h2>Output File Format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>siminfo.txt</em></li>
+</ul>
+<p>The log file of REMD sampling</p>
 </div>
 <div class="section" id="additional-information-about-remd">
 <h2>Additional Information about REMD<a class="headerlink" href="#additional-information-about-remd" title="Permalink to this headline">¶</a></h2>

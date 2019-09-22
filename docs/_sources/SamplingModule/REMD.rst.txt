@@ -11,8 +11,7 @@ The FSATOOl supports Temperature-Replica Exchange Molecular Dynamics which has t
 :kelvinup: **double precision** the highest temperature of REMD
 :kelvinbinratio: **double precision** 
 :exchangestep: **integer** The exchange step between REMD replicas
-:montensample: **integer**
-
+.. :montensample: **integer**
 
 
 Example
@@ -28,11 +27,15 @@ The example file of T-REMD shows below::
 
     &temdss
     nkelvin=4, kelvindown=300.0, kelvinup=300.0
-    kelvinbinratio=1.0, exchangestep=200000, montensample=0
+    kelvinbinratio=1.0, exchangestep=200000
     /
 
 Output File Format
 -------------------
+
+- *siminfo.txt*
+
+The log file of REMD sampling
 
 
 

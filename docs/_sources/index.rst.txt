@@ -35,8 +35,15 @@ Extract Module
 .. toctree::
    Extractmodule
 
+Visualization
+==================
+
+.. toctree::
+    Visualization
+
 Reference
 ===================
+
 
 .. toctree::
     Reference
