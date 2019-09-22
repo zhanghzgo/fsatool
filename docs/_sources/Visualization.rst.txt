@@ -1,0 +1,37 @@
+Visualization module
+=======================
+
+In this module, we provide some simple scripts to show the representive structure in a cluster of structures. And show the transition pathway according to the flux after analyzing by the MSM module.
+
+
+Show representive structure in a cluster of states
+----------------------------------------------------
+
+.. code-block:: bash
+
+    python vmd_show.py -t traj.nc -p prmtop
+
+- Trajectory file must be provided after ``-t`` argument, all the frames in a cluster are assembled in one trajectory file may have similar structures.
+- Prmtop file must be provided after ``-p`` argument.
+- The python script  call the ``vmd`` to show the representive structure. The gray lines represent different Backbone forms, and the Cartoon structure shows the center structure in this cluster. 
+
+    .. image:: _static/representive.png
+        :align: center
+        :scale: 40%
+
+
+Plot flux network
+------------------
+
+.. code-block:: bash
+
+    python plot_network -i net_flux.txt -d .
+    dot -Tpdf file.dot > file.pdf
+
+- the net flux file should be provided after ``-i`` argument
+- the image directory should be provided after ``-d`` argument
+- The output file should use the ``dot`` command to output the image
+
+    .. image:: _static/flux.png
+        :align: center
+- The arrow size may be look strange, and this can be modified by the *Adobe Illustrator* or *CorelDRAW*.
