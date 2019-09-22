@@ -1,4 +1,4 @@
-Visualization module
+Visualization
 =======================
 
 In this module, we provide some simple scripts to show the representive structure in a cluster of structures. And show the transition pathway according to the flux after analyzing by the MSM module.
