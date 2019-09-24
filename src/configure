@@ -1,0 +1,57 @@
+#!/bin/sh
+
+PATCH_DIR=fsatool1_pmemd_src/amber_codes
+
+# check amberhome and pmemd.cuda 
+check_amberhome() {
+    if [ -z "$AMBERHOME" ]; then
+        echo "Your AMBERHOME enviroment is not set!"
+        exit 0
+    elif [ ! -x "$AMBERHOME/bin/pmemd.cuda" ]; then
+        echo "pmemd.cuda is not executable or found"
+        echo "You must install the CUDA version of pmemed first"
+        exit 0
+    else
+        pmemd_version=`$AMBERHOME/bin/pmemd.cuda --version 2>/dev/null | awk '{print $3}'`
+        if [ ! "${pmemd_version%.*}" -ge 16 ]; then
+            echo "pmemd.cuda version is $pmemd_version, but >= 16.0 is needed"
+            exit 0
+        fi
+    fi
+    ln -sf $AMBERHOME/config.h
+}
+
+fsahome=`pwd`
+
+fsatool_patch() {
+    echo "PATCH the amber source file"
+    for file in $PATCH_DIR/*.patch
+    do
+        name=`basename $file`
+        name=${name%.*}
+        patch -b $AMBERHOME/src/pmemd/src/$name  $PATCH_DIR/$name.patch
+    done
+
+# add fsatool enviroment library
+    echo "FSATOOLHOME=$fsahome" >> config.h
+    echo "FSATOOL_SAMPLE_SRC=$fsahome/fsatool1_pmemd_src" >> config.h
+}
+
+fsatool_unpatch() {
+    echo "Unpatch the amber source file"
+    for file in $PATCH_DIR/*.patch
+    do
+        name=`basename $file`
+        name=${name%.*}
+        patch -R $AMBERHOME/src/pmemd/src/$name $PATCH_DIR/$name.patch
+    done
+    sed -i --follow-symlinks '/FSATOOL/d' config.h
+    rm config.h
+}
+
+check_amberhome
+if [[ $1 == "patch" ]]; then
+    fsatool_patch
+else
+    fsatool_unpatch
+fi

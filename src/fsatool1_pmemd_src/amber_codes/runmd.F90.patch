@@ -1,0 +1,72 @@
+--- /home/haomiao/md/amber18/src/pmemd/src/runmd.F90	2019-09-15 16:27:16.761829562 +0800
++++ fsatool1_pmemd_src/amber_codes/runmd.F90	2019-09-14 17:47:12.106857470 +0800
+@@ -1172,6 +1172,10 @@
+     ! which are stored in the array last_vel.
+     !=======================================================================
+ 
++!================================ cjchen
++    call ccj_interface_init(temp0,dt,ene_avg_sampling,crd)
++!=====================================================
++
+     do 
+         DBG_ARRAYS_TIME_STEP(nstep)
+ 
+@@ -1470,6 +1474,10 @@
+       !      call gpu_download_frc(frc)
+       !#endif
+ 
++!===================== cjchen
++  call ccj_interface_updateforce(nstep,need_pot_enes,si(si_pot_ene),temp0)
++!==============================================
++
+       ! Now that we've called force, evaluate the success (or failure) of the
+       ! constant pH move and write the result to the output file, if not done yet
+ 
+@@ -3331,6 +3339,10 @@
+ 
+         ! Output from this step if required:
+ 
++!====================== cjchen
++      call ccj_interface_simulate(nstep,need_pot_enes,si(si_pot_ene),temp0)
++!====================================================================
++
+         ! Only the master needs to do the output:
+ 
+         if (usemidpoint) then
+@@ -4899,4 +4911,36 @@
+ 
+ end subroutine matinv
+ 
++!========== cjchen
++subroutine runmd_interface_getpotandfrc(tpnum,tpstep,crd,frc,tpepot)
++  use mdin_ctrl_dat_mod
++  use img_mod
++  use parallel_dat_mod
++  use parallel_mod
++  use gb_force_mod
++  use pme_force_mod
++  implicit none
++  integer,intent(in) :: tpnum,tpstep
++  real*8,intent(in) :: crd(3,tpnum)
++  real*8,intent(out) :: frc(3,tpnum)
++  real*8,intent(out) :: tpepot
++  logical,save :: new_list,not_first_loop
++  type(gb_pot_ene_rec)  :: gb_pot_ene
++  type(pme_pot_ene_rec) :: pme_pot_ene
++  double precision      :: virial(3)    ! Dummy space; returned value ignored.
++  double precision      :: ekcmt(3)     ! Dummy space; returned value ignored.
++  double precision      :: pme_err_est  ! Dummy space; returned value ignored.
++
++  if ( ntb == 0 ) then
++     call gb_force(tpnum, crd, frc, gb_pot_ene, irespa, .true.)
++     tpepot=gb_pot_ene%total
++  else
++     call gpu_force_new_neighborlist()
++     call pme_force(tpnum, crd, frc, gbl_img_atm_map, gbl_atm_img_map, &
++                     .true., .true., .false. , &
++                     pme_pot_ene, tpstep, virial, ekcmt, pme_err_est)
++     tpepot=pme_pot_ene%total
++  end if
++end subroutine
++
+ end module runmd_mod

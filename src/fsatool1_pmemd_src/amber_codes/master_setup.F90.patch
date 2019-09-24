@@ -1,0 +1,16 @@
+--- /home/haomiao/md/amber18/src/pmemd/src/master_setup.F90	2019-09-15 16:27:16.392829570 +0800
++++ fsatool1_pmemd_src/amber_codes/master_setup.F90	2019-09-14 17:47:12.285857466 +0800
+@@ -209,7 +209,12 @@
+ #ifdef CUDA
+   !RCW: Call to set device is mostly redundant now due to'
+   !     removal of -gpu command line argument. But leave for now.
+-  call gpu_set_device(-1)
++
++!======================= cjchen
++   call gpu_set_device(mytaskid)
++!=============================================
++!  call gpu_set_device(-1)
++
+   call gpu_init()
+ 
+   !Write info about CUDA GPU(s)

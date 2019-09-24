@@ -1,0 +1,14 @@
+--- /home/haomiao/md/amber18/src/pmemd/src/parallel_dat.F90	2019-09-15 16:27:16.468829568 +0800
++++ fsatool1_pmemd_src/amber_codes/parallel_dat.F90	2019-09-14 17:47:12.211857468 +0800
+@@ -22,6 +22,11 @@
+ 
+   integer, save         :: numgroups = 1 ! Num of pmemd replicas. Default to 1
+ 
++!====================== cjchen
++  integer, save         :: mytaskid      ! rank in pmemd replica
++  integer, save         :: numtasks      ! size of pmemd communicator
++!==============================================
++
+ #ifdef MPI
+ ! MAJOR NOTE:  Some of the stuff here is basically unnecessary under
+ !              Generalized Born; due to large cutoffs and small atom counts

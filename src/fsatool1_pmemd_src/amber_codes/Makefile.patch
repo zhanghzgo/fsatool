@@ -1,0 +1,34 @@
+--- /home/haomiao/md/amber18/src/pmemd/src/Makefile	2019-09-15 16:28:36.279827720 +0800
++++ fsatool1_pmemd_src/amber_codes/Makefile	2019-09-15 16:16:08.089845050 +0800
+@@ -70,10 +70,9 @@
+ 	@echo " "
+ 
+ .PHONY: cuda_serial cuda_SPFP cuda_DPFP cuda_lib_clean
+-cuda_serial: configured_cuda cuda_SPFP cuda_DPFP
++cuda_serial: configured_cuda cuda_SPFP
+ 
+ cuda_SPFP:
+-	$(MAKE) cuda_lib_clean
+ 	$(MAKE) $(BINDIR)/pmemd.cuda_SPFP
+ 	cd $(BINDIR) && ln -f -s pmemd.cuda_SPFP$(SFX) pmemd.cuda$(SFX)
+ 
+@@ -129,9 +128,16 @@
+ 	$(PMEMD_LD) $(PMEMD_FOPTFLAGS) $(LDOUT)$@ $(OBJS) -L$(LIBDIR) $(NETCDFLIBF) \
+       $(LDFLAGS) $(PMEMD_FLIBSF) $(NFE_OBJECTS)
+ 
+-$(BINDIR)/pmemd.cuda_SPFP$(SFX): $(OBJS) cuda_spfp_libs $(EMIL) $(NFE_OBJECTS)
+-	$(PMEMD_LD) $(PMEMD_FOPTFLAGS) $(PMEMD_CU_DEFINES) $(LDOUT)$@ $(OBJS) \
+-      $(PMEMD_CU_LIBS) -L$(LIBDIR) $(NETCDFLIBF) $(LDFLAGS) $(PMEMD_FLIBSF) $(NFE_OBJECTS)
++$(BINDIR)/pmemd.cuda_SPFP$(SFX): fsatool_mark $(OBJS) cuda_spfp_libs $(EMIL) $(NFE_OBJECTS)
++	mpif90 $(PMEMD_FOPTFLAGS) $(PMEMD_CU_DEFINES) $(LDOUT)$@ $(OBJS) \
++      $(PMEMD_CU_LIBS) -L$(LIBDIR) $(NETCDFLIBF) $(LDFLAGS) $(PMEMD_FLIBSF) $(NFE_OBJECTS) \
++      fsatool_lib.a $(PMEMD_FLIBSF)
++
++fsatool_mark :
++	rm -rf fsatool_lib.a
++	cd $(FSATOOL_SAMPLE_SRC) && make
++	cp $(FSATOOL_SAMPLE_SRC)/fsatool_lib.a .
++	cp $(FSATOOL_SAMPLE_SRC)/*.mod .
+ 
+ $(BINDIR)/pmemd.cuda_SPFP.MPI$(SFX): $(OBJS) cuda_spfp_libs $(EMIL) $(NFE_OBJECTS)
+ 	$(PMEMD_LD) $(PMEMD_FOPTFLAGS) $(PMEMD_CU_DEFINES) $(LDOUT)$@ $(OBJS) \

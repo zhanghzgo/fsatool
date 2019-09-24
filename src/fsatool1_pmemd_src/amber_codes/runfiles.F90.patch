@@ -1,0 +1,35 @@
+--- /home/haomiao/md/amber18/src/pmemd/src/runfiles.F90	2019-09-15 16:27:16.686829563 +0800
++++ fsatool1_pmemd_src/amber_codes/runfiles.F90	2019-09-14 17:47:11.941857474 +0800
+@@ -696,6 +696,10 @@
+   aveind      = 0.d0
+   avetot      = 0.d0
+ 
++!=================== cjchen
++  goto 10001
++!===============================
++
+   write(mdout, 9021) nstep, time, temp, si(si_tot_press)
+   write(mdout, 9029) si(si_tot_ene), si(si_kin_ene), si(si_pot_ene)
+   write(mdout, 9039) si(si_bond_ene), si(si_angle_ene), si(si_dihedral_ene)
+@@ -745,6 +749,10 @@
+   if (using_pme_potential .and. ips == 0) write(mdout, 9188) si(si_pme_err_est)
+ #endif
+ 
++!============ cjchen
++10001 continue
++!=================================
++
+ !  Printout SGLD guiding information
+ if(.not. usemidpoint) then
+    if (isgld > 0) call sgld_print(mdout)
+@@ -780,7 +788,9 @@
+       write (mdout,9078) si(si_emap_ene)
+    endif
+ 
+-  write(mdout, 8088)
++!================= cjchen
++!  write(mdout, 8088)
++!==========================
+ 
+ ! Check if we need to force a flush of mdout. Barring changes in the unix
+ ! system call, the clock is going to wrap in 2038, and flushing won't be

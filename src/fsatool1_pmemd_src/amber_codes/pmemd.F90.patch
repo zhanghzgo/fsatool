@@ -1,0 +1,28 @@
+--- /home/haomiao/md/amber18/src/pmemd/src/pmemd.F90	2019-09-15 16:27:16.594829565 +0800
++++ fsatool1_pmemd_src/amber_codes/pmemd.F90	2019-09-14 17:47:12.038857472 +0800
+@@ -276,13 +276,24 @@
+ #ifdef MPI
+   call gpu_startup(mytaskid, numtasks, pmemd_comm_number)
+ #else
+-  call gpu_startup()
++
++!=================== cjchen
++   call ccj_interface_mpiinit(mytaskid,numtasks)
++   call gpu_startup(mytaskid, numtasks, 100000001)
++!============================================
++!  call gpu_startup()
++
+ #endif
+ #endif
+ 
+   if (master) then
+     call master_setup(num_ints, num_reals, new_stack_limit, terminal_flag)
+ #ifdef CUDA
++
++!=================== cjchen
++    call ccj_interface_getmolecules(nspm, atm_nsp, natom, atm_qterm, nres, gbl_labres, gbl_res_atms, atm_igraph, atm_mass,pbc_box)
++!===========================================
++
+   else
+     !RCW: Call to set device is mostly redundant now due to
+     !     removal of -gpu command line argument. But leave for now.
