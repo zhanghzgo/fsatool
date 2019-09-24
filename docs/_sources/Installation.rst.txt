@@ -16,7 +16,7 @@ Build From source
 1. First build of pmemd.CUDA according to the AMBER 18 package
 2. Patch file to the Amber Source File::
 
-    make patch
+    ./configure patch
 3. Installation of FSATOOL::
 
     make install
@@ -27,7 +27,7 @@ Uninstallation
 
 1. Unpatch File from the AMBER Source File::
 
-    make unpatch
+    ./configure unpatch
 2. Clean the unnecessary file::
 
     make clean
