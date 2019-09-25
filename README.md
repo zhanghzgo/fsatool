@@ -37,5 +37,5 @@ A fast sampling and analysis tool for biomolecules
 
 ## Uninstallation
 
-- clean the file `make clean`
+- Clean the file `make clean`
 - Unpatch the amber source file `./configure unpatch`
