@@ -8,7 +8,7 @@ FFLAGS= -fPIC
 FOPTFLAGS= -O3 -mtune=native
 FPP=cpp -DMPI
 FWARNFLAGS=-Wno-unused-function
-LAPACKLIBS=/home/haomiao/server_home/tmp/fsatool/lib/lapack-3.7.0/lib64
+LAPACKLIBS=../lib/lapack-3.7.0/lib64
 FLIBS=-llapack -lblas
 CPPLIBS = -lstdc++
 

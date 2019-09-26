@@ -35,6 +35,7 @@ fsatool_patch() {
 # add fsatool enviroment library
     echo "FSATOOLHOME=$fsahome" >> config.h
     echo "FSATOOL_SAMPLE_SRC=$fsahome/fsatool1_pmemd_src" >> config.h
+    mv $AMBERHOME/bin/pmemd.cuda_SPFP $AMBERHOME/bin/pmemd.cuda_SPFP.bak
 }
 
 fsatool_unpatch() {
@@ -47,6 +48,7 @@ fsatool_unpatch() {
     done
     sed -i --follow-symlinks '/FSATOOL/d' config.h
     rm config.h
+    mv $AMBERHOME/bin/pmemd.cuda_SPFP.bak $AMBERHOME/bin/pmemd.cuda_SPFP
 }
 
 check_amberhome

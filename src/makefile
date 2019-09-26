@@ -5,10 +5,10 @@ SHELL := /bin/bash
 
 include $(CONFIG_FILE)
 
-.PHONY: all clean
+.PHONY: install clean
 
 
-all:
+install:
 	make -C $(FSATOOL_SAMPLE_SRC)
 	make -C $(AMBERHOME)/src/pmemd
 	make -C fsatool2_extract/
