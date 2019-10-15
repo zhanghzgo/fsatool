@@ -48,7 +48,7 @@ Necessary Parameters
 
     :ncv: **integer** The dimension of collective variables in the input trajectory.
     :ss2cv: **array of integer** The index of collective variables that used to build msm. The number of index must  be equal to the  *ndim* parameter in the *msm* namelist
-    :cvfiles: **array of character** The input file's name which contains the collective variables. The order of file must follow the increased temperature.
+    :cvsfiles: **array of character** The input file's name which contains the collective variables. The order of file must follow the increased temperature.
     :kelvinarray: **array of double precision** If the *kelvinarray* parameter has only one value, then all the input file has same temperature. If the *kelevinarray* parameter has multiple values, then the *numFileLevel* parameter must be specifed
     :numFileLevel: **array of integer** If the *kelvinarray* has only one value, then this parameter dosen't need to be specifed. Else, the number of file in each temperature needs to be declared. 
 
@@ -66,7 +66,7 @@ Example
 The example of input file for MSM analyze shows below ::
 
     &msm
-        ncv=2, 
+        ndim=2, 
         ncluster=800, 
         lagstep=20, 
         nstate=12, 
@@ -76,10 +76,10 @@ The example of input file for MSM analyze shows below ::
     /
 
     &trajs
+        ncv=3
         kelvinarray=300
-        ndim=2
         ss2cv=1,2
-        cvfiles="sim1/cvfile", "sim2/cvfile"
+        cvsfiles="sim1/cvfile", "sim2/cvfile"
     /
 
 Input File Format

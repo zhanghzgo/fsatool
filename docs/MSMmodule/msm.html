@@ -24,6 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -260,7 +261,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">ss2cv:</th><td class="field-body"><strong>array of integer</strong> The index of collective variables that used to build msm. The number of index must  be equal to the  <em>ndim</em> parameter in the <em>msm</em> namelist</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">cvfiles:</th><td class="field-body"><strong>array of character</strong> The input file’s name which contains the collective variables. The order of file must follow the increased temperature.</td>
+<tr class="field-odd field"><th class="field-name">cvsfiles:</th><td class="field-body"><strong>array of character</strong> The input file’s name which contains the collective variables. The order of file must follow the increased temperature.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">kelvinarray:</th><td class="field-body"><strong>array of double precision</strong> If the <em>kelvinarray</em> parameter has only one value, then all the input file has same temperature. If the <em>kelevinarray</em> parameter has multiple values, then the <em>numFileLevel</em> parameter must be specifed</td>
 </tr>
@@ -288,7 +289,7 @@
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>The example of input file for MSM analyze shows below</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">msm</span>
-    <span class="n">ncv</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">ndim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="n">ncluster</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
     <span class="n">lagstep</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
     <span class="n">nstate</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
@@ -298,10 +299,10 @@
 <span class="o">/</span>
 
 <span class="o">&amp;</span><span class="n">trajs</span>
+    <span class="n">ncv</span><span class="o">=</span><span class="mi">3</span>
     <span class="n">kelvinarray</span><span class="o">=</span><span class="mi">300</span>
-    <span class="n">ndim</span><span class="o">=</span><span class="mi">2</span>
     <span class="n">ss2cv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span>
-    <span class="n">cvfiles</span><span class="o">=</span><span class="s2">&quot;sim1/cvfile&quot;</span><span class="p">,</span> <span class="s2">&quot;sim2/cvfile&quot;</span>
+    <span class="n">cvsfiles</span><span class="o">=</span><span class="s2">&quot;sim1/cvfile&quot;</span><span class="p">,</span> <span class="s2">&quot;sim2/cvfile&quot;</span>
 <span class="o">/</span>
 </pre></div>
 </div>

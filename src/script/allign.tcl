@@ -1,4 +1,4 @@
-mol addfile G.prmtop
+mol addfile replace_prmtop
 mol addfile mdcrdfile  first 0 last -1 step 1 waitfor -1
 set nframe [molinfo top get numframes]
 mol modstyle 0 0 NewCartoon 0.1 2
