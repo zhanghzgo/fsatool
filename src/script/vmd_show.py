@@ -13,9 +13,9 @@ if __name__ == "__main__":
     parser.add_argument("-m", "--mask", metavar="top", type=str, help="the atom mask", default="backbone")
 
     args=parser.parse_args()
-    inputfile = args.trajectory
+    inputfile = args.traj
     topfile = args.prmtop
-    maks = args.mask
+    mask = args.mask
 
     traj = pj.load(inputfile, top=topfile)
     len_traj = len(traj)
