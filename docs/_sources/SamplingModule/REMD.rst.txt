@@ -9,9 +9,7 @@ The FSATOOl supports Temperature-Replica Exchange Molecular Dynamics which has t
 :nkelvin: **integer** Number of replicas during the REMD
 :kelvindown: **double precision** the lowest temperature of REMD
 :kelvinup: **double precision** the highest temperature of REMD
-:kelvinbinratio: **double precision** 
 :exchangestep: **integer** The exchange step between REMD replicas
-.. :montensample: **integer**
 
 
 Example
@@ -20,14 +18,12 @@ Example
 The example file of T-REMD shows below::
 
     &task
-    iftemd=true
-    ! ifflood=.true.
-    !   ifeds=.true.
+        iftemd=true
     /
 
     &temdss
-    nkelvin=4, kelvindown=300.0, kelvinup=300.0
-    kelvinbinratio=1.0, exchangestep=200000
+    nkelvin=4, kelvindown=300.0, kelvinup=360.0
+    exchangestep=20000
     /
 
 Output File Format
@@ -37,8 +33,21 @@ Output File Format
 
 The log file of REMD sampling
 
+- *procinfo/traj_*.mdcrd*
+
+The output trajectory file
+
 
 
 
 Additional Information about REMD
 -------------------------------------
+
+The temperatures along the adjacent two replicas has the formula:
+
+.. math:: 
+
+    T_i = T_{i-1} * \eta
+
+where the :math:`\eta = (T_{h} / T_{low})^{1/(n-1)}`
+

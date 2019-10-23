@@ -30,7 +30,7 @@ Optional Parameters
 ------------------------
 
     :nits: **integer** The `nits` first timescales will be computed. Default values is 5
-    :lagfactor: **double precesion** This parameter decides how many lag time needs be to calculated. Default values is 1, which means that lagtime needs to be computed is (lagstart, lagstart+1, lagstart+2, ..., lagend). Otherwise, the lagtime needs to be computed is (lagstart, ceiling(lagstart*lagfactor), ceiling(ceiling(lagstart*lagfactor)*lagfactor) ,... )
+    :lagfactor: **double precesion** This parameter decides how many lag time needs be to calculated. Default values is 1, which means that lagtime needs to be computed is (lagstart, lagstart+1, lagstart+2, ..., lagend). Otherwise, the lagtime needs to be computed are (lagstart, ceiling(lagstart*lagfactor), ceiling(ceiling(lagstart*lagfactor)*lagfactor) ,... )
 
 
 Example 

@@ -14,10 +14,17 @@ Build From source
 -------------------
 
 1. First build of pmemd.CUDA according to the AMBER 18 package
-2. Patch file to the Amber Source File::
 
+2. Clone the repository::
+
+    git clone https://github.com/fsatool/fsatool.git
+
+3. Patch file to the Amber Source File::
+
+    cd fsatool/
     ./configure patch
-3. Installation of FSATOOL::
+
+4. Installation of FSATOOL::
 
     make install
 

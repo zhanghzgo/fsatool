@@ -190,7 +190,7 @@
 <h1>Check<a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h1>
 <p>Validate markov state model by computing implied timescale along different lagtime</p>
 <div class="math">
-<p><img src="../_images/math/c35ee8827ba0d9943dac936a8ab68630b44a2fc9.png" alt="t_i(\tau) = - \frac{\tau}{\ln \lambda_i(\tau)}"/></p>
+<p><img src="../_images/math/04c73c9a3eeef09502d71d14e4683d8d0fedc5cd.png" alt="t_i(\tau) = - \frac{\tau}{\ln \lambda_i(\tau)}"/></p>
 </div><p>This module needs to support <cite>check</cite> namelist</p>
 <div class="section" id="check-namelist">
 <h2><cite>check</cite> namelist<a class="headerlink" href="#check-namelist" title="Permalink to this headline">¶</a></h2>
@@ -198,38 +198,38 @@
 <p>Necessary Parameters</p>
 <hr class="docutils" />
 <blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">checkmethod:</th><td class="field-body"><strong>character</strong> The module only supports “timescales” now</td>
-</tr>
-<tr class="field-even field"><th class="field-name">datafile:</th><td class="field-body"><strong>character</strong> The data file, after runing the <cite>msm</cite>, the <cite>cluster_forcheck.txt</cite> will be generated.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">nsnap:</th><td class="field-body"><strong>integer</strong> the number of frames</td>
-</tr>
-<tr class="field-even field"><th class="field-name">ncluster:</th><td class="field-body"><strong>integer</strong> the nubmer of cluster</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">lagstart:</th><td class="field-body"><strong>integer</strong> the start lag time</td>
-</tr>
-<tr class="field-even field"><th class="field-name">lagend:</th><td class="field-body"><strong>integer</strong> the end lag time</td>
-</tr>
-</tbody>
-</table>
+<div><dl class="field-list simple">
+<dt class="field-odd">checkmethod</dt>
+<dd class="field-odd"><p><strong>character</strong> The module only supports “timescales” now</p>
+</dd>
+<dt class="field-even">datafile</dt>
+<dd class="field-even"><p><strong>character</strong> The data file, after runing the <cite>msm</cite>, the <cite>cluster_forcheck.txt</cite> will be generated.</p>
+</dd>
+<dt class="field-odd">nsnap</dt>
+<dd class="field-odd"><p><strong>integer</strong> the number of frames</p>
+</dd>
+<dt class="field-even">ncluster</dt>
+<dd class="field-even"><p><strong>integer</strong> the nubmer of cluster</p>
+</dd>
+<dt class="field-odd">lagstart</dt>
+<dd class="field-odd"><p><strong>integer</strong> the start lag time</p>
+</dd>
+<dt class="field-even">lagend</dt>
+<dd class="field-even"><p><strong>integer</strong> the end lag time</p>
+</dd>
+</dl>
 </div></blockquote>
 <p>Optional Parameters</p>
 <hr class="docutils" />
 <blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">nits:</th><td class="field-body"><strong>integer</strong> The <cite>nits</cite> first timescales will be computed. Default values is 5</td>
-</tr>
-<tr class="field-even field"><th class="field-name">lagfactor:</th><td class="field-body"><strong>double precesion</strong> This parameter decides how many lag time needs be to calculated. Default values is 1, which means that lagtime needs to be computed is (lagstart, lagstart+1, lagstart+2, …, lagend). Otherwise, the lagtime needs to be computed is (lagstart, ceiling(lagstart*lagfactor), ceiling(ceiling(lagstart*lagfactor)*lagfactor) ,… )</td>
-</tr>
-</tbody>
-</table>
+<div><dl class="field-list simple">
+<dt class="field-odd">nits</dt>
+<dd class="field-odd"><p><strong>integer</strong> The <cite>nits</cite> first timescales will be computed. Default values is 5</p>
+</dd>
+<dt class="field-even">lagfactor</dt>
+<dd class="field-even"><p><strong>double precesion</strong> This parameter decides how many lag time needs be to calculated. Default values is 1, which means that lagtime needs to be computed is (lagstart, lagstart+1, lagstart+2, …, lagend). Otherwise, the lagtime needs to be computed are (lagstart, ceiling(lagstart*lagfactor), ceiling(ceiling(lagstart*lagfactor)*lagfactor) ,… )</p>
+</dd>
+</dl>
 </div></blockquote>
 </div>
 <div class="section" id="example">
@@ -249,120 +249,120 @@
 <div class="section" id="input-file-format">
 <h2>Input file format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
 <p>Input file for computing timescales on each lagstep</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="57%" />
-<col width="43%" />
+<col style="width: 57%" />
+<col style="width: 43%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">cluster index</th>
-<th class="head">traj index</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>cluster index</p></th>
+<th class="head"><p>traj index</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>17</td>
-<td>1</td>
+<tbody>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>17</td>
-<td>1</td>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-even"><td>17</td>
-<td>1</td>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>17</td>
-<td>1</td>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-even"><td>17</td>
-<td>1</td>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>30</td>
-<td>2</td>
+<tr class="row-odd"><td><p>30</p></td>
+<td><p>2</p></td>
 </tr>
-<tr class="row-even"><td>30</td>
-<td>2</td>
+<tr class="row-even"><td><p>30</p></td>
+<td><p>2</p></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <div><ul class="simple">
-<li><strong>cluster index</strong> : cluster index</li>
-<li><strong>traj index</strong>    : trajectory index</li>
+<li><p><strong>cluster index</strong> : cluster index</p></li>
+<li><p><strong>traj index</strong>    : trajectory index</p></li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="output-file-format">
 <h2>Output File format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="26%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
+<col style="width: 26%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Lag Time(Step)</th>
-<th class="head">ITS_1</th>
-<th class="head">ITS_2</th>
-<th class="head">ITS_3</th>
-<th class="head">ITS_4</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Lag Time(Step)</p></th>
+<th class="head"><p>ITS_1</p></th>
+<th class="head"><p>ITS_2</p></th>
+<th class="head"><p>ITS_3</p></th>
+<th class="head"><p>ITS_4</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1</td>
-<td>5.609200</td>
-<td>4.861529</td>
-<td>4.610854</td>
-<td>3.925325</td>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>5.609200</p></td>
+<td><p>4.861529</p></td>
+<td><p>4.610854</p></td>
+<td><p>3.925325</p></td>
 </tr>
-<tr class="row-odd"><td>2</td>
-<td>6.139198</td>
-<td>5.365859</td>
-<td>5.123708</td>
-<td>4.476163</td>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>6.139198</p></td>
+<td><p>5.365859</p></td>
+<td><p>5.123708</p></td>
+<td><p>4.476163</p></td>
 </tr>
-<tr class="row-even"><td>3</td>
-<td>6.427766</td>
-<td>5.660073</td>
-<td>5.367871</td>
-<td>4.793291</td>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>6.427766</p></td>
+<td><p>5.660073</p></td>
+<td><p>5.367871</p></td>
+<td><p>4.793291</p></td>
 </tr>
-<tr class="row-odd"><td>5</td>
-<td>6.805771</td>
-<td>6.039218</td>
-<td>5.718156</td>
-<td>5.188161</td>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>6.805771</p></td>
+<td><p>6.039218</p></td>
+<td><p>5.718156</p></td>
+<td><p>5.188161</p></td>
 </tr>
-<tr class="row-even"><td>7</td>
-<td>7.095851</td>
-<td>6.359180</td>
-<td>6.011286</td>
-<td>5.464064</td>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>7.095851</p></td>
+<td><p>6.359180</p></td>
+<td><p>6.011286</p></td>
+<td><p>5.464064</p></td>
 </tr>
-<tr class="row-odd"><td>10</td>
-<td>7.371417</td>
-<td>6.601618</td>
-<td>6.303304</td>
-<td>5.781580</td>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>7.371417</p></td>
+<td><p>6.601618</p></td>
+<td><p>6.303304</p></td>
+<td><p>5.781580</p></td>
 </tr>
-<tr class="row-even"><td>14</td>
-<td>7.719357</td>
-<td>6.915298</td>
-<td>6.582905</td>
-<td>6.129559</td>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>7.719357</p></td>
+<td><p>6.915298</p></td>
+<td><p>6.582905</p></td>
+<td><p>6.129559</p></td>
 </tr>
-<tr class="row-odd"><td>20</td>
-<td>8.075277</td>
-<td>7.169253</td>
-<td>6.793979</td>
-<td>6.640330</td>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>8.075277</p></td>
+<td><p>7.169253</p></td>
+<td><p>6.793979</p></td>
+<td><p>6.640330</p></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <div><ul class="simple">
-<li><strong>Lag Time (Step)</strong> lag time</li>
-<li><strong>ITS</strong> implied time scale. As the first eigenvalue is 1 for the transition matrix and the implied timescales is infinity. The total implied timescales is <cite>nits</cite> - 1</li>
+<li><p><strong>Lag Time (Step)</strong> lag time</p></li>
+<li><p><strong>ITS</strong> implied time scale. As the first eigenvalue is 1 for the transition matrix and the implied timescales is infinity. The total implied timescales is <cite>nits</cite> - 1</p></li>
 </ul>
 </div></blockquote>
 </div>

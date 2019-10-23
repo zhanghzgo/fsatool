@@ -193,20 +193,20 @@
 <h2><cite>lumping</cite> namelist<a class="headerlink" href="#lumping-namelist" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>lumping</cite> namelist has following parameters</p>
 <blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">nclsuter:</th><td class="field-body"><strong>Integer</strong> The number of microstates to perform lumping procedure</td>
-</tr>
-<tr class="field-even field"><th class="field-name">nstate:</th><td class="field-body"><strong>Integer</strong> The number of macrostates needs to be provided</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">lumpingmethod:</th><td class="field-body"><strong>character</strong> Two methods “pccaplus” and “bace” are supported</td>
-</tr>
-<tr class="field-even field"><th class="field-name">datafile:</th><td class="field-body"><strong>character</strong>  If the <cite>lumpingmethod</cite> is “pccaplus”, then the data file should contains the transition probability matrix. Else if the <cite>lumpingmethod</cite> is “bace”, then the transtion count matrix should be provided</td>
-</tr>
-</tbody>
-</table>
+<div><dl class="field-list simple">
+<dt class="field-odd">nclsuter</dt>
+<dd class="field-odd"><p><strong>Integer</strong> The number of microstates to perform lumping procedure</p>
+</dd>
+<dt class="field-even">nstate</dt>
+<dd class="field-even"><p><strong>Integer</strong> The number of macrostates needs to be provided</p>
+</dd>
+<dt class="field-odd">lumpingmethod</dt>
+<dd class="field-odd"><p><strong>character</strong> Two methods “pccaplus” and “bace” are supported</p>
+</dd>
+<dt class="field-even">datafile</dt>
+<dd class="field-even"><p><strong>character</strong>  If the <cite>lumpingmethod</cite> is “pccaplus”, then the data file should contains the transition probability matrix. Else if the <cite>lumpingmethod</cite> is “bace”, then the transtion count matrix should be provided</p>
+</dd>
+</dl>
 </div></blockquote>
 </div>
 <div class="section" id="example">
@@ -223,44 +223,44 @@
 </div>
 <div class="section" id="input-file-format">
 <h2>Input File Format<a class="headerlink" href="#input-file-format" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="24%" />
-<col width="29%" />
-<col width="24%" />
-<col width="24%" />
+<col style="width: 24%" />
+<col style="width: 29%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>P_00</td>
-<td>P_01</td>
-<td>…</td>
-<td>P_0n</td>
+<tbody>
+<tr class="row-odd"><td><p>P_00</p></td>
+<td><p>P_01</p></td>
+<td><p>…</p></td>
+<td><p>P_0n</p></td>
 </tr>
-<tr class="row-even"><td>P_10</td>
-<td>P_11</td>
-<td>…</td>
-<td>P_1n</td>
+<tr class="row-even"><td><p>P_10</p></td>
+<td><p>P_11</p></td>
+<td><p>…</p></td>
+<td><p>P_1n</p></td>
 </tr>
-<tr class="row-odd"><td>P_20</td>
-<td>P_21</td>
-<td>…</td>
-<td>P_2n</td>
+<tr class="row-odd"><td><p>P_20</p></td>
+<td><p>P_21</p></td>
+<td><p>…</p></td>
+<td><p>P_2n</p></td>
 </tr>
-<tr class="row-even"><td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
 </tr>
-<tr class="row-odd"><td>P_n0</td>
-<td>P_n1</td>
-<td>…</td>
-<td>P_nn</td>
+<tr class="row-odd"><td><p>P_n0</p></td>
+<td><p>P_n1</p></td>
+<td><p>…</p></td>
+<td><p>P_nn</p></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <div><ul class="simple">
-<li><strong>P_ij</strong> : <strong>double precision</strong> When the “bace” method is used, the P_ij is the transition count from cluster i to cluster j.  When the “pccaplus” method is used, the P_ij is the transition probability from cluster i to cluster j. The file has <cite>ncluster</cite> lines, and for each line, there are <cite>ncluster</cite> numbers.</li>
+<li><p><strong>P_ij</strong> : <strong>double precision</strong> When the “bace” method is used, the P_ij is the transition count from cluster i to cluster j.  When the “pccaplus” method is used, the P_ij is the transition probability from cluster i to cluster j. The file has <cite>ncluster</cite> lines, and for each line, there are <cite>ncluster</cite> numbers.</p></li>
 </ul>
 </div></blockquote>
 </div>

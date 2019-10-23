@@ -26,7 +26,7 @@ The example of tpt namelist shows below ::
 
     &tpt
         tpmfile = "tpm.txt"
-        statefile = "state.txt"
+        statefile = "states.txt"
         startstate = 10
         endstate = 8
     /

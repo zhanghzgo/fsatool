@@ -188,48 +188,52 @@
 <p>The FSATOOl supports Temperature-Replica Exchange Molecular Dynamics which has the <cite>temdss</cite> namelist</p>
 <div class="section" id="temdss-namelist">
 <h2><cite>temdss</cite> namelist<a class="headerlink" href="#temdss-namelist" title="Permalink to this headline">¶</a></h2>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">nkelvin:</th><td class="field-body"><strong>integer</strong> Number of replicas during the REMD</td>
-</tr>
-<tr class="field-even field"><th class="field-name">kelvindown:</th><td class="field-body"><strong>double precision</strong> the lowest temperature of REMD</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">kelvinup:</th><td class="field-body"><strong>double precision</strong> the highest temperature of REMD</td>
-</tr>
-<tr class="field-even field"><th class="field-name">kelvinbinratio:</th><td class="field-body"><strong>double precision</strong></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">exchangestep:</th><td class="field-body"><strong>integer</strong> The exchange step between REMD replicas</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">nkelvin</dt>
+<dd class="field-odd"><p><strong>integer</strong> Number of replicas during the REMD</p>
+</dd>
+<dt class="field-even">kelvindown</dt>
+<dd class="field-even"><p><strong>double precision</strong> the lowest temperature of REMD</p>
+</dd>
+<dt class="field-odd">kelvinup</dt>
+<dd class="field-odd"><p><strong>double precision</strong> the highest temperature of REMD</p>
+</dd>
+<dt class="field-even">exchangestep</dt>
+<dd class="field-even"><p><strong>integer</strong> The exchange step between REMD replicas</p>
+</dd>
+</dl>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <p>The example file of T-REMD shows below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&amp;task
-iftemd=true
-! ifflood=.true.
-!   ifeds=.true.
-/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">task</span>
+    <span class="n">iftemd</span><span class="o">=</span><span class="n">true</span>
+<span class="o">/</span>
 
-&amp;temdss
-nkelvin=4, kelvindown=300.0, kelvinup=300.0
-kelvinbinratio=1.0, exchangestep=200000
-/
+<span class="o">&amp;</span><span class="n">temdss</span>
+<span class="n">nkelvin</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">kelvindown</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">kelvinup</span><span class="o">=</span><span class="mf">360.0</span>
+<span class="n">exchangestep</span><span class="o">=</span><span class="mi">20000</span>
+<span class="o">/</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="output-file-format">
 <h2>Output File Format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><em>siminfo.txt</em></li>
+<li><p><em>siminfo.txt</em></p></li>
 </ul>
 <p>The log file of REMD sampling</p>
+<ul class="simple">
+<li><p><em>procinfo/traj_</em>.mdcrd*</p></li>
+</ul>
+<p>The output trajectory file</p>
 </div>
 <div class="section" id="additional-information-about-remd">
 <h2>Additional Information about REMD<a class="headerlink" href="#additional-information-about-remd" title="Permalink to this headline">¶</a></h2>
+<p>The temperatures along the adjacent two replicas has the formula:</p>
+<div class="math">
+<p><img src="../_images/math/b078ee45b87bf5e054537e3d73e25eefc4ca3dc2.png" alt="T_i = T_{i-1} * \eta"/></p>
+</div><p>where the <img class="math" src="../_images/math/a863934c3d976fe78b69ee03ce08b8fd02da3d5c.png" alt="\eta = (T_{h} / T_{low})^{1/(n-1)}"/></p>
 </div>
 </div>
 

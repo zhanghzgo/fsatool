@@ -188,53 +188,56 @@
 <p>Perform Steered Molecular Dynamics along the a collect variable</p>
 <div class="section" id="smd-namelist">
 <h2>SMD namelist<a class="headerlink" href="#smd-namelist" title="Permalink to this headline">¶</a></h2>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">smdleadcv:</th><td class="field-body"><strong>integer</strong>  The number of collective variables that SMD peforms. In these CVs, there are only one cv is used to pull the molecular, the others is used to constrain the system.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">smdrelaxstep:</th><td class="field-body"><strong>integer</strong> The relaxation step of the structure For the reason that first structure is not fully relaxed before performing SMD.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">smdspeed:</th><td class="field-body"><strong>double precision</strong> the speed of the pull <img class="math" src="../_images/math/d2ca2f044d4f7408f87a383868a41e9598f37aff.png" alt="(\AA/ns)"/></td>
-</tr>
-<tr class="field-even field"><th class="field-name">smdinicv:</th><td class="field-body"><strong>array of integers</strong> the initial position of CV</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">smdendcv:</th><td class="field-body"><strong>double precision array</strong> the end position of CV</td>
-</tr>
-<tr class="field-even field"><th class="field-name">smdk:</th><td class="field-body"><strong>double precision array</strong> the stiffness of the spring <img class="math" src="../_images/math/e02b3c03047a27ddc1fcdd2a930b20bdb7a661eb.png" alt="(kcal/(mol * \AA^2))"/></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">smdpathfrag:</th><td class="field-body"><strong>integer</strong> the number of discrete states in the pulling coordinates</td>
-</tr>
-<tr class="field-even field"><th class="field-name">smdnpath:</th><td class="field-body"><strong>integer</strong> the total number of trajectory needs to be generated. When the pulling is finished, the structure comes back to the initial structure, and start pulling again. But this number is restricted by the <cite>nstlim</cite> parameter.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">smdweigthfreq:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">smdleadcv</dt>
+<dd class="field-odd"><p><strong>integer</strong>  The number of collective variables that SMD peforms. In these CVs, there are only one cv is used to pull the molecular, the others is used to constrain the system.</p>
+</dd>
+<dt class="field-even">smdrelaxstep</dt>
+<dd class="field-even"><p><strong>integer</strong> The relaxation step of the structure For the reason that first structure is not fully relaxed before performing SMD.</p>
+</dd>
+<dt class="field-odd">smdspeed</dt>
+<dd class="field-odd"><p><strong>double precision</strong> the speed of the pull <img class="math" src="../_images/math/756b7ece75c180a845065c01509417a0607aa63b.png" alt="(\AA/ns)"/></p>
+</dd>
+<dt class="field-even">smdinicv</dt>
+<dd class="field-even"><p><strong>array of integers</strong> the initial position of CV</p>
+</dd>
+<dt class="field-odd">smdendcv</dt>
+<dd class="field-odd"><p><strong>double precision array</strong> the end position of CV</p>
+</dd>
+<dt class="field-even">smdk</dt>
+<dd class="field-even"><p><strong>double precision array</strong> the stiffness of the spring <img class="math" src="../_images/math/b9fa9cd4a50ef179c21c38481f64c4dd3496791c.png" alt="(kcal/(mol * \AA^2))"/></p>
+</dd>
+<dt class="field-odd">smdpathfrag</dt>
+<dd class="field-odd"><p><strong>integer</strong> the number of discrete states in the pulling coordinates</p>
+</dd>
+<dt class="field-even">smdnpath</dt>
+<dd class="field-even"><p><strong>integer</strong> the total number of trajectory needs to be generated. When the pulling is finished, the structure comes back to the initial structure, and start pulling again. But this number is restricted by the <cite>nstlim</cite> parameter.</p>
+</dd>
+<dt class="field-odd">smdweigthfreq</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p>The input file of the SMD shows below, the <cite>task</cite> namelist should set ifsmd to true. And input file contains two kinds of collective variables: one is followed the same rule as AMBER, the other CV names csacolvar is used to constrain the atom in a plane or in a line.</p>
-<dl class="docutils">
-<dt>&amp;task</dt>
-<dd>ifsmd = .true.</dd>
+<dl class="simple">
+<dt>&amp;task</dt><dd><p>ifsmd = .true.</p>
+</dd>
 </dl>
 <p>/</p>
-<dl class="docutils">
-<dt>&amp;smd</dt>
-<dd>smdleadcv = 3, smdrelaxstep = 0, reversefrag = 0, smdspeed = 1.0 (A/ns)
+<dl class="simple">
+<dt>&amp;smd</dt><dd><p>smdleadcv = 3, smdrelaxstep = 0, reversefrag = 0, smdspeed = 1.0 (A/ns)
 smdinitcv = 0, 0, 17.5, smdendcv = 0, 0, 40.5
 smdk = 50.0, 50.0, 50.0
 smdpathfrag = 200
 smdnpath = 1
-smdweigthfreq = 1000</dd>
+smdweigthfreq = 1000</p>
+</dd>
 </dl>
 <p>/</p>
-<dl class="docutils">
-<dt>&amp;colvar</dt>
-<dd><p class="first">cv_type = ‘N_OF_BONDS’
+<dl>
+<dt>&amp;colvar</dt><dd><p>cv_type = ‘N_OF_BONDS’
 cv_min=0.0, cv_max=64.0
 cv_ni= 128, cv_nr=  1
 cv_i =  19, 330,   3, 339,  19, 346,   4, 379,  15, 416,  16, 431,  13, 501,   8, 611,  31, 299,  23, 330,  23, 334,  23, 346,  41, 605,  41, 618,  57, 289,  57, 293,  43, 330,  43, 334,  49, 358,  50, 417,  54, 479,  51, 501,  47, 579,  45, 601,  51, 605,  45, 618,  65, 271,  61, 289,  61, 301,  76, 576,  59, 601,  74, 616,  73, 620,  74, 671,  73, 687,  66, 744,  96, 249,  96, 269,  78, 289,  78, 293,  88, 318,  90, 353,  92, 485,  80, 572,  80, 580, 100, 269, 102, 553,  98, 572,  98, 576, 108, 590, 112, 746, 125, 553, 117, 572, 149, 570, 158, 403, 158, 464, 162, 485, 163, 564, 204, 406, 204, 484, 271, 809, 297, 624, 304, 694, 598, 746,
@@ -246,7 +249,7 @@ cv_min = 4, cv_max = 10
 cv_ni=  51, cv_nr=  0
 cv_i =    5,   22,   44,   60,   79,   99,  118,  140,  152,  168,  190,  197,  219,  226,  248,  270,  277,  292,  311,  333,  347,  363,  373,  385,  392,  413,  423,  437,  451,  471,  490,  510,  532,  549,  556,  575,  585,  604,  619,  629,  651,  657,  667,  681,  700,  722,  732,  751,  766,  776,  793,
 /</p>
-<p class="last">&amp;csacolvar
+<p>&amp;csacolvar
 cv_type = ‘COM_DIS’
 cv_i = 5, 12,31,0,46,62,79,
 cv_r = 1.0, -1.0, -1.0
@@ -258,78 +261,77 @@ cv_r = 1.0, -1.0, -1.0
 <div class="section" id="output-file-format">
 <h2>Output File Format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><em>siminfo.txt</em></li>
+<li><p><em>siminfo.txt</em></p></li>
 </ul>
 <p>The log file of SMD sampling</p>
 <ul class="simple">
-<li><em>procinfo_0.txt</em></li>
+<li><p><em>procinfo_0.txt</em></p></li>
 </ul>
 <p>The information of SMD</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="8%" />
-<col width="31%" />
-<col width="20%" />
-<col width="10%" />
-<col width="14%" />
-<col width="16%" />
+<col style="width: 8%" />
+<col style="width: 31%" />
+<col style="width: 20%" />
+<col style="width: 10%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">time</th>
-<th class="head">process index</th>
-<th class="head">potential</th>
-<th class="head">CV1</th>
-<th class="head">CV2</th>
-<th class="head">CV3</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>time</p></th>
+<th class="head"><p>process index</p></th>
+<th class="head"><p>potential</p></th>
+<th class="head"><p>CV1</p></th>
+<th class="head"><p>CV2</p></th>
+<th class="head"><p>CV3</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>0.00</td>
-<td>0</td>
-<td>-1245.197</td>
-<td>0.533</td>
-<td>0.683</td>
-<td>17.789</td>
+<tbody>
+<tr class="row-even"><td><p>0.00</p></td>
+<td><p>0</p></td>
+<td><p>-1245.197</p></td>
+<td><p>0.533</p></td>
+<td><p>0.683</p></td>
+<td><p>17.789</p></td>
 </tr>
-<tr class="row-odd"><td>0.02</td>
-<td>0</td>
-<td>-1321.712</td>
-<td>0.624</td>
-<td>0.672</td>
-<td>17.851</td>
+<tr class="row-odd"><td><p>0.02</p></td>
+<td><p>0</p></td>
+<td><p>-1321.712</p></td>
+<td><p>0.624</p></td>
+<td><p>0.672</p></td>
+<td><p>17.851</p></td>
 </tr>
-<tr class="row-even"><td>0.04</td>
-<td>0</td>
-<td>-1241.781</td>
-<td>0.584</td>
-<td>0.664</td>
-<td>17.776</td>
+<tr class="row-even"><td><p>0.04</p></td>
+<td><p>0</p></td>
+<td><p>-1241.781</p></td>
+<td><p>0.584</p></td>
+<td><p>0.664</p></td>
+<td><p>17.776</p></td>
 </tr>
-<tr class="row-odd"><td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
-<td>…</td>
+<tr class="row-odd"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
 </tr>
 </tbody>
 </table>
 <ul class="simple">
-<li><em>weight_1.txt</em></li>
+<li><p><em>weight_1.txt</em></p></li>
 </ul>
 </div>
 <div class="section" id="additional-information-about-using-smd">
 <h2>Additional information about using SMD<a class="headerlink" href="#additional-information-about-using-smd" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><dl class="first docutils">
-<dt>There are two kinds of CV. One is the same as AMBER, the other has the features that the AMBER does not provide which has a <cite>csacolvar</cite> namelist.</dt>
-<dd><ol class="first last arabic">
-<li>The ‘COM_POS’ cv type is used to</li>
+<li><dl class="simple">
+<dt>There are two kinds of CV. One is the same as AMBER, the other has the features that the AMBER does not provide which has a <cite>csacolvar</cite> namelist.</dt><dd><ol class="arabic simple">
+<li><p>The ‘COM_POS’ cv type is used to</p></li>
 </ol>
 </dd>
 </dl>
 </li>
-<li>In SMD, there is only one CV could be regarded as the pulling CV. The other CVs are used to constrain the system</li>
+<li><p>In SMD, there is only one CV could be regarded as the pulling CV. The other CVs are used to constrain the system</p></li>
 </ol>
 </div>
 </div>
