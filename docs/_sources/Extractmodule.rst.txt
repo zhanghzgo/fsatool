@@ -13,7 +13,8 @@ The extract module need a input file named "extracted.in" which has a "trajs" na
 :num_file: **integer** number of file of total trajectory or information file
 :procFile: **array of characers** The name of each "procinfo" file
 :ncv: **integer** number of collective variables in the "procinfo" file
-:traj_file: **array of characers** When this variables is specified, then the NETCDF format of Cartesian coordinate files are extracted among each temperature.
+:trajFile: **array of characers** When this variables is specified, then the NETCDF format of Cartesian coordinate files are extracted among each temperature.
+:removeFirstFrame: **logical** Save the first frame or not (Default: not remove the first frame)
 
 Example
 ------------
