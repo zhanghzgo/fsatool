@@ -82,6 +82,7 @@ contains
     close(iocluster)
     
     call getfreeunit(iocluster); open(unit=iocluster,file=trim(resultdir)//"/cluster_forcheck.txt",action="write")
+    write(iocluster, "(2I10)") nsnap, ncluster
     do i = 1, nsnap
        write(iocluster,"(i6,3i10,10f10.5)") maptocluster(i), trajindex(i)
     end do

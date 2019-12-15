@@ -18,7 +18,7 @@ contains
     use mod_global, only:  nsnap, ncluster, trajindex, ifcutcluster
     character(256) :: inputfile, resultfile, datafile, checkmethod
     integer :: i, iofile, ierr, lagstart, lagend, nits
-    namelist /check/ checkmethod, datafile, nsnap, ncluster, lagstart, lagend, nits, lagfactor
+    namelist /check/ checkmethod, datafile, lagstart, lagend, nits, lagfactor
 
     nits = 5; lagfactor = 1.0d0
     call getfreeunit(iofile)
@@ -32,6 +32,7 @@ contains
 
     call getfreeunit(iofile)
     open(unit=iofile, file=trim(datafile), action="read")
+    read(iofile, *) nsnap, ncluster
     do i = 1, nsnap
       read(iofile, *) maptocluster(i), trajindex(i)
     enddo
