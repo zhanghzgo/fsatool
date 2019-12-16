@@ -14,8 +14,7 @@ contains
 
 
   subroutine markov_check(inputfile, resultfile)
-    use cluster, only: maptocluster
-    use mod_global, only:  nsnap, ncluster, trajindex, ifcutcluster
+    use mpi
     character(256) :: inputfile, resultfile, datafile, checkmethod
     integer :: i, iofile, ierr, lagstart, lagend, nits
     namelist /check/ checkmethod, datafile, lagstart, lagend, nits, lagfactor
@@ -27,12 +26,11 @@ contains
     if(ierr < 0) call errormsg("error in reading check namelist")
     close(iofile)
 
-    allocate(maptocluster(nsnap), trajindex(nsnap), ifcutcluster(nsnap))
-    ifcutcluster = 0
-
     call getfreeunit(iofile)
     open(unit=iofile, file=trim(datafile), action="read")
     read(iofile, *) nsnap, ncluster
+    allocate(maptocluster(nsnap), trajindex(nsnap), ifcutcluster(nsnap))
+    ifcutcluster = 0
     do i = 1, nsnap
       read(iofile, *) maptocluster(i), trajindex(i)
     enddo
@@ -273,10 +271,8 @@ contains
   end subroutine
 
   subroutine markov_task1_impliedtimescale_vs_lagtime(resultfile, nits, lag_start, lag_end)
-    use mod_global, only: procid, procnum
-    include "mpif.h"
-    character(256) :: resultfile, ierr
-    integer :: i, j, ioimplied, nits, lag_size, lag_start, lag_end, lag_temp
+    character(256) :: resultfile
+    integer :: i, j, ioimplied, nits, lag_size, lag_start, lag_end, lag_temp, ierr
     integer, allocatable :: lag_array(:), sub_lagarray(:)
     integer,dimension(0:procnum) ::  job_index(procnum+1)
     integer :: left, right, length
@@ -315,7 +311,7 @@ contains
       write(ioimplied, *) "#lagstep #implied_timescale(nits-1)"
     endif
 
-    call mpi_bcast(lag_size, 1, mpi_int, 0, mpi_comm_world, ierr)
+    call mpi_bcast(lag_size, 1, mpi_integer, 0, mpi_comm_world, ierr)
 
     do i = 0, procnum - 1
       left = i * lag_size /procnum + 1

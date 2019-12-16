@@ -23,11 +23,38 @@ module tpt
   TYPE(pathwayinfo), allocatable, dimension(:) :: pathways
 contains
 
+  subroutine mod_tpt(inputfile, outputfile)
+    character(max_str_len) :: inputfile, outputfile
+    if(procid > 0) return
+    startstate = 0; endstate = 0
+    call tpt_readfile(inputfile)
+    call assign_states()
+    allocate (flux(size(tpm, 1), size(tpm, 1)), macro_net_flux(nstate, nstate))
+    resultdir = "./"
+    call tpt_analyze(outputfile)
+  end subroutine mod_tpt
+
+  subroutine tpt_msm_analysis()
+    integer :: i
+    if(procid>0) return
+    stateindex(1) = 1
+    do i = 2, nstate + 1
+      stateindex(i) = stateindex(i) + 1
+    enddo
+    call assign_states()
+    allocate(flux(size(tpm, 1), size(tpm, 1)), macro_net_flux(nstate, nstate))
+    call tpt_analyze()
+  end subroutine
+
   subroutine tpt_readfile(infile)
-    character(256) :: infile, tpmfile, statefile
-    integer :: i, j, k, prev_temp, iofile, ierr
+    character(max_str_len) :: infile, tpmfile, statefile
+    logical :: read_pi
+    integer :: i, j, prev_temp, iofile, ierr
     integer :: temp 
-    namelist /tpt/ tpmfile, statefile,  startstate, endstate
+    namelist /tpt/ tpmfile, statefile, startstate, endstate, nstate, read_pi
+
+    statefile = ""
+    read_pi = .true.
 
     if (procid  > 0) return
     call getfreeunit(iofile)
@@ -36,59 +63,63 @@ contains
     if (ierr<0) call errormsg("error in reading the tpt namelist")
     close(iofile)
 
-    call getfreeunit(iofile)
-    open(unit=iofile, file=trim(statefile), action="read")
-    i = 0
-    do
-      read(iofile, *, iostat=ierr) nstate
-      i = i + 1
-      if (ierr < 0) exit
-    enddo
-    ncluster = i - 1
-    close(iofile)
+    if (statefile == "") then
+      ncluster = nstate
+    else
+      call getfreeunit(iofile)
+      open(unit=iofile, file=trim(statefile), action="read")
+      i = 0
+      do
+        read(iofile, *, iostat=ierr) nstate
+        i = i + 1
+        if (ierr < 0) exit
+      enddo
+      ncluster = i - 1
+      close(iofile)
+    endif
 
-    allocate(tpm(ncluster, ncluster), pi(ncluster), &
-    stateindex(nstate+1), maptomacro(ncluster))
+    allocate(tpm(ncluster, ncluster), pi(ncluster), stateindex(nstate+1), maptomacro(ncluster))
     if(allocated(netflux)) deallocate(netflux)
     allocate(netflux(ncluster, ncluster))
 
     call getfreeunit(iofile)
     open(unit=iofile, file=trim(tpmfile), action="read")
-    read(iofile, *) pi
+
+    if (read_pi) read(iofile, *) pi
     do i = 1, ncluster
       read(iofile, *) tpm(i, :)
     enddo
     close(iofile)
 
-    call getfreeunit(iofile)
-    open(unit=iofile, file=trim(statefile), action="read")
-    prev_temp = 1; j = 1; stateindex(j) = 1
-    do i = 1, ncluster
-      read(iofile, *) temp, maptomacro(i)
-      if (temp /= prev_temp) then 
-        prev_temp = temp
-        j = j + 1
-        stateindex(j) = i
-      endif
-    enddo
-    stateindex(j+1) = ncluster+1
-    close(iofile)
+    if (.not. read_pi) call math_tpm_pi(tpm, ncluster, pi)
+
+    if (statefile /= "") then
+      call getfreeunit(iofile)
+      open(unit=iofile, file=trim(statefile), action="read")
+      prev_temp = 1; j = 1; stateindex(j) = 1
+      do i = 1, ncluster
+        read(iofile, *) temp, maptomacro(i)
+        if (temp /= prev_temp) then 
+          prev_temp = temp
+          j = j + 1
+          stateindex(j) = i
+        endif
+      enddo
+      stateindex(j+1) = ncluster+1
+      close(iofile)
+    else
+      stateindex(1) = 1
+      do i = 1, ncluster
+        maptomacro(i) = i
+        stateindex(i+1) = i+1
+      enddo
+    endif
   end subroutine
 
-  subroutine mod_tpt(inputfile, outputfile)
-    character(256) :: inputfile, outputfile
-    if(procid > 0) return
-    startstate = 0; endstate = 0
-    call tpt_readfile(inputfile)
-    call assign_states()
-    allocate(flux(size(tpm, 1), size(tpm, 1)), macro_net_flux(nstate, nstate))
-    resultdir = "./"
-    call tpt_analyze(outputfile)
-  end subroutine mod_tpt
-
   subroutine assign_states()
-    integer :: i, j, k, iofile, count
+    integer :: i, j, k, count
     count = 0
+    ! count number of cluster in Astate
     do i = 1,  max_state_num
       if (startstate(i) /= 0) then
         count = count + stateindex(startstate(i)+1) - stateindex(startstate(i))
@@ -100,6 +131,7 @@ contains
     sendstate => startstate(1:i-1)
     num_state_inA = i - 1
 
+    !count number of cluster in Bstate
     count = 0
     do i = 1, max_state_num
       if (endstate(i) /= 0) then
@@ -112,6 +144,7 @@ contains
     recv_state => endstate(1:i-1)
     num_state_inB = i - 1
 
+    ! Given the c
     j = 1
     do k = 1, max_state_num
       if(startstate(k) /= 0) then
@@ -137,9 +170,10 @@ contains
     character(max_str_len), optional :: outputfile
     integer :: i, iofile
     character(max_str_len) :: resultfile = "macro_net_flux.txt"
+    
     if (present(outputfile)) resultfile = outputfile
     call loginfo("TPT Analysis")
-    call tpt_flux(tpm, size(tpm, 1), Astate, Bstate, flux, reversible=.true., pi=pi)
+    call tpt_flux(tpm, size(tpm, 1), Astate, Bstate, flux, reversible=.false., pi=pi)
     call coarse_grain_flux(flux, macro_net_flux)
     call tpt_extract_pathways(macro_net_flux, num_path, sendstate, recv_state, totalflux)
     call printinfo(num_path)
@@ -151,18 +185,6 @@ contains
     enddo
     close(iofile)
     call loginfo()
-  end subroutine
-
-  subroutine tpt_msm_analysis()
-    integer :: i
-    if(procid>0) return
-    stateindex(1) = 1
-    do i = 2, nstate + 1
-      stateindex(i) = stateindex(i) + 1
-    enddo
-    call assign_states()
-    allocate(flux(size(tpm, 1), size(tpm, 1)), macro_net_flux(nstate, nstate))
-    call tpt_analyze()
   end subroutine
 
   subroutine printinfo(num_path)
@@ -181,7 +203,7 @@ contains
     write(*, "(a, 50f10.6)")"pi: ", pi
     write(*, "(a, f12.8)")"totalflux: ", totalflux
     write(*, "(a, f12.8)")"kab: ", kab
-    write(*, "(A, I3, A)")"There are total ", num_path, " pathways in the network"
+    write(*, "(a, I3, a)")"There are total ", num_path, " pathways in the network"
     allocate(temp_array(num_path), sortindex(num_path))
     do i = 1, num_path
         temp_array(i) = pathways(i) % fluxratio
@@ -390,7 +412,8 @@ contains
       enddo
     enddo
 
-    forall(i=1:nstate, j=1:nstate, i/=j) 
+    ! forall(i=1:nstate, j=1:nstate, i/=j) 
+    forall(i=1:nstate, j=1:nstate) 
       macro_net_flux(i,j)=max(macro_flux(i,j)-macro_flux(j,i), 0.0d0)
     endforall
 
@@ -402,6 +425,10 @@ contains
         exit
       endif
     enddo
+    ! print*, endstate
+    ! print*, totalflux
+    ! print*, macro_net_flux(:, 19)
+    ! stop
 
     do i = 1, nstate
       temp = 0d0; tempsum=0d0; tempsum2 = 0d0

@@ -6,7 +6,6 @@ module cluster
   use util
   use mod_global
   use netcdf_func
-  ! use coor_cluster
   implicit none
   integer,dimension(:),allocatable :: maptocluster, centersnaps, numberincluster
   ! real*8, pointer :: shared_array(:, :)
@@ -254,7 +253,7 @@ contains
           center_shift = center_shift + sqrt(dist2)
         enddo
         if(mod(j, 20) == 0) then
-          write(*, "(a, I5, a, F8.5)") "kmeans has run", j ," iterations, the error is ", center_shift**2
+          write(*, "(a, I5, a, F8.5)") "kmeans has run", j ," iterations, the center shift is ", center_shift**2
         endif
       endif
       call mpi_bcast(coor_center, ndim*ncluster, mpi_double, 0, mpi_comm_world, ierr)

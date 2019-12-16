@@ -9,7 +9,7 @@ module mod_global
   integer :: cutnumber, lagstep, nstate
   integer, dimension(:), allocatable :: snap2cluster, levelindex, ifcutcluster, trajIndex
   real*8, dimension(:,:), pointer :: traj,cvs
-  real*8, dimension(:), allocatable :: refcoor,snappot
+  real*8, dimension(:), allocatable :: snappot
   real*8 :: lagtime,kelvin
   real*8,parameter :: gasconst=1.9872065d-3
   logical :: ifreadcoor, ifOnlyRunClustering
@@ -38,7 +38,7 @@ subroutine mod_global_readtraj()
   integer :: iofile, ierr, shared_cv_win, shared_traj_win
   namelist /trajs/ ncv, framestride, kelvinarray, trajtype, cvsfiles, coorfiles, numFileLevel
 
-  cvsfiles=""; framestride = 1; kelvinarray=0
+  cvsfiles=""; framestride = 1; kelvinarray=0;numFileLevel=0
 
   if ( procid == 0 ) then
     call loginfo("Read Collective Variables File")
@@ -60,7 +60,7 @@ subroutine mod_global_readtraj()
   call mpi_bcast(framestride,1,mpi_integer,0,mpi_comm_world,ierr)
   call mpi_bcast(nsnap,1,mpi_integer,0,mpi_comm_world,ierr)
 
-  allocate(trajIndex(nsnap))
+  allocate(trajIndex(nsnap), snappot(nsnap), levelindex(nsnap))
 
   call init_shared_memory(mpi_comm_world)
   call allocate_shared_memory_for_2dim_array([ncv, nsnap], cvs, shared_cv_win)
@@ -82,7 +82,7 @@ subroutine mod_global_readtraj()
   endif
 
   if(shared_id == 0) then
-    call read_cv_file(cvsfiles, numFile, ncv, cvs, frameStride, trajIndex)
+    call read_cv_file(cvsfiles, numFile, cvs, frameStride, trajIndex)
     if(trajtype == 1) then
       call read_pdb_file(coorFiles, numFile, ndim, traj, frameStride)
     else if(trajtype == 2) then
@@ -120,9 +120,9 @@ subroutine read_pdb_file(files, numFile, ndim, trajs, frameStride)
 end subroutine
 
 
-subroutine read_cv_file(files, numFile, ncv, cvs, frameStride, trajIndex)
+subroutine read_cv_file(files, numFile,  cvs, frameStride, trajIndex)
   character(max_str_len), intent(in) :: files(:)
-  integer, intent(in) :: numFile, ncv, frameStride
+  integer, intent(in) :: numFile, frameStride
   integer, intent(out) :: trajIndex(:)
   real*8, intent(out) :: cvs(:, :)
 
@@ -130,9 +130,14 @@ subroutine read_cv_file(files, numFile, ncv, cvs, frameStride, trajIndex)
   integer :: snapIndex = 1
   integer :: frameLine, iofile
   integer :: numFrames(numFile)
-  integer :: i, j, k, ierr
+  integer :: i, j, k, ierr, ilevel, accumFileNum
 
+  ilevel = 1; accumFileNum = 0;
   do i = 1, numFile
+    if(i - accumFileNum > numFileLevel(ilevel)) then 
+      accumFileNum = accumFileNum + numFileLevel(ilevel)
+      ilevel = ilevel + 1
+    endif
     call getfreeunit(iofile)
     open(unit = iofile, file=files(i), action="read")
     outer: do 
@@ -140,7 +145,12 @@ subroutine read_cv_file(files, numFile, ncv, cvs, frameStride, trajIndex)
         read(iofile, *, iostat=ierr)
         if(ierr < 0) exit outer
       enddo
-      read(iofile, *, iostat=ierr) trajIndex(snapIndex), cvs(:, snapIndex)
+      if (nlevel == 0) then ! we don't need read potential
+        read(iofile, *, iostat=ierr) trajIndex(snapIndex), cvs(:, snapIndex)
+      else ! need to specify the potential 
+        read(iofile, *, iostat=ierr) trajIndex(snapIndex), snappot(snapIndex), cvs(:, snapIndex)
+      endif
+      levelindex(snapIndex) = ilevel
       if (ierr < 0) exit
       snapIndex = snapIndex + 1
     enddo outer
@@ -193,7 +203,6 @@ subroutine find_level_from_kelvinarray()
   do i = 1, maxnlevel
     if(kelvinarray(i) > 0) nlevel = nlevel + 1
   enddo
-  allocate(levelindex(nsnap))
 end subroutine
 
 subroutine partition_process(procnum, nsnap, displs, counts, left, right)

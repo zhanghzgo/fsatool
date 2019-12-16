@@ -26,7 +26,7 @@ contains
   end subroutine
 
   subroutine fileio_init_parameters()
-    include 'mpif.h'
+    use mpi
     logical :: file_exist
     integer :: ierr, system, iofile, i, j
     namelist /msm/ ndim, ncluster, clustermethod, clustercycle,cutnumber, &
@@ -92,7 +92,7 @@ contains
     do icluster=1,ncluster
        do i=clusterindex(icluster)+1,clusterindex(icluster+1)
           isnap = clusters(i)
-          write(iocluster,"(i10,2i8,10f10.5)") isnap,icluster,trajindex(isnap), cvs(:, isnap)
+          write(iocluster,"(i10,2i8,10f10.5)") isnap, icluster, trajindex(isnap), cvs(:, isnap)
        end do
     end do
     close(iocluster)
@@ -141,7 +141,6 @@ contains
   end subroutine fileio_readclusterinfo
 
   subroutine fileio_writestateinfo()
-
     use math
     integer :: i, j, k, numstate, index, istate, totalcount, isnap, iostate
     integer :: numcluster_state(nstate), temp(tcmdim), state_center_snap(nstate), helparray(tcmdim)

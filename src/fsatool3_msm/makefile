@@ -1,6 +1,5 @@
 SHELL=/bin/sh
-include ../config.h
-# objects=util.o math.o netcdf_helper.o transform.o mod_global.o coor_cluster.o cluster.o  tram.o coarse_grain.o markov.o fileio.o tpt.o pharsecmd.o msm.o scc.o
+#include ../config.h
 objects=util.o math.o netcdf_helper.o mpi_shared_memory.o transform.o mod_global.o cluster.o  tram.o coarse_grain.o markov.o fileio.o tpt.o pharsecmd.o msm.o scc.o
 
 cpp_obj = scc.o

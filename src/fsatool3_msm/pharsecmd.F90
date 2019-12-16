@@ -22,7 +22,6 @@ contains
                 call run_check()
             case("tram")
                 call run_tram()
-                msm = .true.
             case ("transform")
                 call run_transform()
             case("write")

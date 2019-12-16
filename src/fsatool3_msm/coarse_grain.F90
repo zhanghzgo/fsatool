@@ -28,9 +28,11 @@ contains
     elseif (lumpingmethod == "pccaplus") then
        call loginfo("PCCAplus Coarse Grain")
        call coarse_grain_pccaplus(tcmortpm, nstate)
+#ifdef DEBUG
        write(*, "(a)") "membership functions:"
-      !  do i = 1, nmicro; print"(40f10.5)", membership(i, :);  enddo
-      call coarse_grain_pccaplus_tpm(tcmortpm, membership, nstate)
+       do i = 1, nmicro; print"(40f10.5)", membership(i, :);  enddo
+#endif
+       call coarse_grain_pccaplus_tpm(tcmortpm, membership, nstate)
       ! write(*, "(a)") "PCCA Coarse Grain TPM:"
       ! do i = 1, nstate; print"(40f10.5)", macrotpm(i, :);  enddo
     else

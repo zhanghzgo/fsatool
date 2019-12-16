@@ -22,20 +22,21 @@ contains
       real*8 :: temppot
       real*8, allocatable :: tpm(: ,:)
       integer, allocatable :: reducedtcmindex(:)
-      namelist /tram/ kelvinarray, nlevel, nsnap, ncluster,lagstep, datafile
+      namelist /tram/ kelvinarray, nlevel, lagstep, datafile
 
       if(procid > 0) return
+      resultdir = "."
       call getfreeunit(iofile)
       open(unit=iofile, file=trim(inputfile), action="read")
       read(iofile, nml=tram, iostat=ierr)
       if(ierr < 0) call errormsg("error in reading tram namelist")
       close(iofile)
 
-      allocate(maptocluster(nsnap), trajindex(nsnap), snappot(nsnap), levelindex(nsnap), ifcutcluster(nsnap))
-      ifcutcluster=0
-
       call  getfreeunit(iofile)
       open(iofile, file=trim(datafile), action="read")
+      read(iofile, *) nsnap, ncluster
+      allocate(maptocluster(nsnap), trajindex(nsnap), snappot(nsnap), levelindex(nsnap), ifcutcluster(nsnap))
+      ifcutcluster=0
       do i = 1, nsnap
          read(iofile, *) index, index2, index3, temppot
          maptocluster(index) = index2
@@ -49,7 +50,7 @@ contains
    end subroutine
 
    subroutine tram_analysis(tpm, reducedTcmIndex)
-      include "mpif.h"
+      use mpi
       real*8, allocatable :: tpm(:, :)
       integer, allocatable :: reducedTcmIndex(:)
       integer :: i, iofile
@@ -65,7 +66,7 @@ contains
       write(*,"(a)") "the pi and tpm has been write in the info/tram_tpm.txt file"
       write(*, "(a, I6, a)") "After tram analysis, the system has ", size(tpm, 1), " clusters"
       call getfreeunit(iofile)
-      open(unit=iofile, file=resultdir//"/tram_tpm.txt", action="write")
+      open(unit=iofile, file=trim(resultdir)//"/tram_tpm.txt", action="write")
       write(iofile, "(10E13.6)") pi
       do i = 1, size(tpm, 1)
          write(iofile, "(10E13.6)") tpm(i, :)
@@ -162,7 +163,7 @@ contains
       integer :: iclu,jclu,ilevel,iter,isnap,i,j
       real*8 :: temparray(tpncluster), temparray2(tpnlevel), tpsum, tpsum2, tramerror, errormark, tempreal
       real*8,dimension(1:tpncluster,1:tpnlevel) :: newlogvk,newfk, stat_vectors, old_stat_vectors
-      real*8 :: tppot, betak, delta, thermal_energies(tpnlevel), new_thermal_energies(tpnlevel)
+      real*8 :: betak, delta, thermal_energies(tpnlevel), new_thermal_energies(tpnlevel)
       real*8 :: inf= huge(0d0), diff_energy
 
       allocate(logvk(tpncluster, tpnlevel), fk(tpncluster, tpnlevel), &
