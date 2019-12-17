@@ -1,5 +1,4 @@
 SHELL=/bin/sh
-#include ../config.h
 objects=util.o math.o netcdf_helper.o mpi_shared_memory.o transform.o mod_global.o cluster.o  tram.o coarse_grain.o markov.o fileio.o tpt.o pharsecmd.o msm.o scc.o
 
 cpp_obj = scc.o
@@ -19,7 +18,7 @@ msm.x : $(objects)
 	$(FC) $(FOPTFLAGS) $(FWARNFLAGS) -o $@ $^ ${AMBERHOME}/src/pmemd/src/AmberNetcdf.o  ${AMBERHOME}/lib/libnetcdf.so ${AMBERHOME}/lib/libnetcdff.so -L$(LAPACKLIBS) $(FLIBS) $(CPPLIBS)
 
 %.o : %.F90
-	$(FC) $(FOPTFLAGS) -c $^ -DSHOW -I${AMBERHOME}/include -I${AMBERHOME}/src/pmemd/src
+	$(FC) $(FOPTFLAGS) -c $^ -I${AMBERHOME}/include -I${AMBERHOME}/src/pmemd/src
 
 scc.o : scc.cpp
 	g++ $(FOPTFLAGS) -c $^

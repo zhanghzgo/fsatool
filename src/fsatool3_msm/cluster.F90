@@ -1,5 +1,3 @@
-! Chapter 2 Application of Markov State Models to Simulate Long Timescale Dynamics of Biological Macromolecules Lin-Tai Da*, Fu Kit Sheong*, Daniel-Adriano Silva*, and Xuhui Huang
-
 module cluster
   use math, only: math_lRMSD, math_euclidean_distance, math_normalization
   use mpi_shared_memory
@@ -8,7 +6,6 @@ module cluster
   use netcdf_func
   implicit none
   integer,dimension(:),allocatable :: maptocluster, centersnaps, numberincluster
-  ! real*8, pointer :: shared_array(:, :)
 contains
 
   subroutine cluster_analysis()
@@ -57,15 +54,17 @@ contains
     use mpi
 
     logical :: file_exist
-    integer :: iofile, ierr, i, num_file, shared_win
+    integer :: iofile, ierr, i, num_file, shared_win, randomseed
+    integer, allocatable :: seed_array(:)
     real*8 :: start, finish
     character(256) :: inputfile, resultfile
     character(256), dimension(100) :: datafile
-    namelist /cluster/ ncluster, clustercycle, clustermethod, datafile, ndim, nsnap, trajtype
+    namelist /cluster/ ncluster, clustercycle, clustermethod, datafile, ndim, nsnap, trajtype, randomseed
 
     clustercycle = 400
     trajtype = 0
     datafile = ""
+    randomseed = -1
 
     if (procid == 0) then
       call cpu_time(start)
@@ -74,6 +73,17 @@ contains
       read(iofile, nml=cluster, iostat=ierr)
       if (ierr < 0 ) call errormsg("error in reading the cluster namelists")
       close(iofile)
+
+      if (randomseed == -1) then
+        call init_random_seed()
+      else
+        write(*, *) "RANDOM SEED is", randomseed
+        call random_seed(size=i)
+        allocate(seed_array(i))
+        seed_array = randomseed
+        call random_seed(put=seed_array)
+        deallocate(seed_array)
+      endif
      
       i = 1
       do 
@@ -105,8 +115,6 @@ contains
     else
       call allocate_shared_memory_for_2dim_array((/ndim, nsnap/), traj, shared_win)
     endif
-
-    ! print*, procid, ndim, nsnap, size(cvs, 1), size(cvs, 2)
 
     if (shared_id == 0) then
       if (trajtype == 0) then
@@ -159,7 +167,6 @@ contains
     allocate(sub_dist2s(snap_length), sub_weights(snap_length))
 
     if(procid == 0) then
-      call init_random_seed()
       call random_number(ran)
       j = int(ran*nsnap) + 1
     endif
@@ -396,7 +403,7 @@ contains
 
     i = 0; stat=0
     do while(i < niter)
-      if(procid == 0) write(*, *) "kmedoids has run ", i, "/", niter, " steps" 
+      if(procid == 0 .and. mod(i, 10) == 0) write(*, *) "kmedoids has run ", i, "/", niter, " steps" 
       call assignToCluster(coor, ncluster, nsnap, ndim, dist_function)
       call calculateClusterCentroids(coor, ncluster, nsnap, ndim, newCenterSnaps, percent, dist_function)
       if (all(centersnaps == newCenterSnaps)) exit
@@ -530,7 +537,6 @@ contains
     enddo
 
     ! shuffle array
-    call init_random_seed()
     do i = count, 1, -1
       call RANDOM_NUMBER(temp_real)
       j = int(ceiling(temp_real * i))
