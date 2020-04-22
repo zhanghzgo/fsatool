@@ -3,9 +3,9 @@
 if [[ $1 == "sim" ]]; then
     $AMBERHOME/bin/pmemd.cuda "${@:2}"
 elif [[ $1 == "msm" ]]; then
-    /home/haomiao/temp/fsatool_newest/fsatool/src/fsatool3_msm/msm.x "${@:2}"
+    $FSATOOLHOME/fsatool3_msm/msm.x "${@:2}"
 elif [[ $1 == "extract" ]]; then
-    /home/haomiao/temp/fsatool_newest/fsatool/src/fsatool2_extract/extract "${@:2}"
+    $FSATOOLHOME/fsatool2_extract/extract "${@:2}"
 else
     echo "The first argument must be sim, msm, or extract"
 fi

@@ -23,6 +23,20 @@ check_amberhome() {
 
 fsahome=`pwd`
 
+check_has_patched() {
+    if [ ! -x "$AMBERHOME/bin/pmemd.cuda" ] && [ -x "$AMBERHOME/bin/pmemd.cuda_SPFP.bak" ]; then
+        echo "Backup file has found, you have patched the FSATOOL, do not need to patch again!"
+        exit 0
+    fi
+}
+
+check_has_unpatched() {
+    if [ "$AMBERHOME/bin/pmemd.cuda" ] && [ ! -x "$AMBERHOME/bin/pmemd.cuda_SPFP.bak" ]; then
+        echo "Backup file has not found, you have unpatched the FSATOOL, do not need to unpatch again!"
+        exit 0
+    fi
+}
+
 fsatool_patch() {
     echo "PATCH the amber source file"
     for file in $PATCH_DIR/*.patch
@@ -52,9 +66,11 @@ fsatool_unpatch() {
 }
 
 if [[ $1 == "patch" ]]; then
+    check_has_patched
     check_amberhome
     fsatool_patch
 elif [[ $1 == "unpatch" ]]; then
+    check_has_unpatched
     fsatool_unpatch
 else
     echo "Argument must be patch or unpatch"
