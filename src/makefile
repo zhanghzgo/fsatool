@@ -7,7 +7,6 @@ include $(CONFIG_FILE)
 
 .PHONY: install clean
 
-
 install:
 	make -C $(FSATOOL_SAMPLE_SRC)
 	make -C $(AMBERHOME)/src/pmemd

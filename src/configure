@@ -31,11 +31,11 @@ fsatool_patch() {
         name=${name%.*}
         patch -b $AMBERHOME/src/pmemd/src/$name  $PATCH_DIR/$name.patch
     done
-
+# Backup original pmemd.cuda
+    mv $AMBERHOME/bin/pmemd.cuda_SPFP $AMBERHOME/bin/pmemd.cuda_SPFP.bak
 # add fsatool enviroment library
     echo "FSATOOLHOME=$fsahome" >> config.h
     echo "FSATOOL_SAMPLE_SRC=$fsahome/fsatool1_pmemd_src" >> config.h
-    mv $AMBERHOME/bin/pmemd.cuda_SPFP $AMBERHOME/bin/pmemd.cuda_SPFP.bak
 }
 
 fsatool_unpatch() {
@@ -47,13 +47,15 @@ fsatool_unpatch() {
         patch -R $AMBERHOME/src/pmemd/src/$name $PATCH_DIR/$name.patch
     done
     sed -i --follow-symlinks '/FSATOOL/d' config.h
-    rm config.h
     mv $AMBERHOME/bin/pmemd.cuda_SPFP.bak $AMBERHOME/bin/pmemd.cuda_SPFP
+    rm config.h
 }
 
-check_amberhome
 if [[ $1 == "patch" ]]; then
+    check_amberhome
     fsatool_patch
-else
+elif [[ $1 == "unpatch" ]]; then
     fsatool_unpatch
+else
+    echo "Argument must be patch or unpatch"
 fi
