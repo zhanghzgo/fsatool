@@ -65,11 +65,11 @@ fsatool_unpatch() {
     rm config.h
 }
 
-if [[ $1 == "patch" ]]; then
+if [ $1 == "patch" ]; then
     check_has_patched
     check_amberhome
     fsatool_patch
-elif [[ $1 == "unpatch" ]]; then
+elif [ $1 == "unpatch" ]; then
     check_has_unpatched
     fsatool_unpatch
 else
