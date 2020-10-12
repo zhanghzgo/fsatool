@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Mixing REMD with FSATOOL &mdash; FSATOOL 1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Reference" href="../Reference.html" />
+    <link rel="prev" title="Tutorial" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> FSATOOL
+          
+
+          
+            
+            <img src="../_static/fsatool_logo.jpg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../SamplingModule/index.html">Sampling module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../MSMmodule/index.html">MSM module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Extractmodule.html">Extract trajectory module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Visualization.html">Visualization</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Mixing REMD with FSATOOL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aim">Aim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pre-prepared-files">Pre-prepared files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prepare-the-input-file">Prepare the input file</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#collective-variables">Collective variables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#necessary-parameters">Necessary Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-simulation">Running the simulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyze-the-md-results">Analyze the MD results</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#output-file-format">Output File Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extract-trajectory-and-information-files">Extract trajectory and information files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-changes-of-the-cvs">The changes of the CVs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Reference.html">Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">FSATOOL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Tutorial</a> &raquo;</li>
+        
+      <li>Mixing REMD with FSATOOL</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/Tutorial/Mixing_REMD_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mixing-remd-with-fsatool">
+<h1>Mixing REMD with FSATOOL<a class="headerlink" href="#mixing-remd-with-fsatool" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="aim">
+<h2>Aim<a class="headerlink" href="#aim" title="Permalink to this headline">¶</a></h2>
+<p>The aim of this tutorial is to train users to perform <strong>Mixing REMD</strong> simulation with FSATOOL.</p>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>We will perform Mixing REMD simlation with FSATOOL for a small short peptide, Alanine dipeptide( <strong>Ala</strong> ),
+in implicit solvent in this tutorail. The sequence is acetyl (ACE)-ALA-N-methyl (NME) <a class="reference internal" href="#ala-image"><span class="std std-ref">The picture of Alanine dipeptide</span></a>. The free energy
+landscape of this molecule is simple and it has been studied extensively. Two collective variables( <strong>CVs</strong> ): backbone
+angle <strong>Φ</strong> and <strong>Ψ</strong>, are good indicators of the different states of Ala.</p>
+<div class="figure align-default" id="id1">
+<span id="ala-image"></span><a class="reference external image-reference" href="C:\Users\zhz\Pictures\sphinx\ala.png"><img alt="../_images/ala.png" src="../_images/ala.png" /></a>
+<p class="caption"><span class="caption-text">The picture of Alanine dipeptide</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="pre-prepared-files">
+<h2>Pre-prepared files<a class="headerlink" href="#pre-prepared-files" title="Permalink to this headline">¶</a></h2>
+<p>To start this tutorial, we need a <strong>prmtop</strong> file and a <strong>coordinates</strong> file. You can use the <strong>Leap</strong> program in AMBER to
+generate them ( <em>If you have any questions, you can refer to the AMBER
+tutorial: http://ambermd.org/tutorials/basic/tutorial0/index.htm</em> ), or click
+<a class="reference download internal" download="" href="../_downloads/4030622452821f67d138a693f0b4f231/ala.top"><code class="xref download docutils literal notranslate"><span class="pre">ala.top</span></code></a> <a class="reference download internal" download="" href="../_downloads/e16a48c21a1223f5ded83f60f8787205/ala.rst"><code class="xref download docutils literal notranslate"><span class="pre">ala.rst</span></code></a> to download the files.</p>
+</div>
+<div class="section" id="prepare-the-input-file">
+<h2>Prepare the input file<a class="headerlink" href="#prepare-the-input-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="collective-variables">
+<h3>Collective variables<a class="headerlink" href="#collective-variables" title="Permalink to this headline">¶</a></h3>
+<p>In <strong>Mixing REMD</strong>, We will perform Adaptively Biased Molecular Dynamics( <strong>ABMD</strong> ) for fast sampling in the CVs space .
+Here we choose the backbone dihedral ( <strong>Φ</strong> and <strong>Ψ</strong> ) as the CVs.
+The CVs are defined in the <code class="docutils literal notranslate"><span class="pre">colvar</span></code> namelist in AMBER. The CV of <strong>Φ</strong> is defined as follow :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&amp;colvar
+  cv_type = &#39;TORSION&#39;
+  cv_min=-3.2, cv_max=3.2
+  cv_ni = 4
+  cv_i= 5, 7, 9, 15         ! Φ
+/
+</pre></div>
+</div>
+<p>This section contain a <code class="docutils literal notranslate"><span class="pre">cv_type</span></code> keyword along with a string of <code class="docutils literal notranslate"><span class="pre">TORSION</span></code> and a list of
+integers following <code class="docutils literal notranslate"><span class="pre">cv_i</span></code> keyword  which represents the indexes of atoms (the number of integers
+is defined by cv_ni) . It will calculat that dihedral angle (in radians) formed by atoms with
+indexes 5, 7, 9 and 15 which is called <strong>Φ</strong> here. <code class="docutils literal notranslate"><span class="pre">cv_max</span></code> and <code class="docutils literal notranslate"><span class="pre">cv_min</span></code> defined the largest and smallest desired
+value of CVs. For more information, please refer to AMBER18: <a class="reference external" href="https://ambermd.org/doc12/Amber18.pdf">https://ambermd.org/doc12/Amber18.pdf</a></p>
+<p>Similarly, the CV of <strong>Ψ</strong> is defined as follow :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&amp;colvar
+  cv_type = &#39;TORSION&#39;
+  cv_min=-3.2, cv_max=3.2
+  cv_ni = 4
+  cv_i=  7, 9, 15, 17       ! Ψ
+/
+</pre></div>
+</div>
+</div>
+<div class="section" id="necessary-parameters">
+<h3>Necessary Parameters<a class="headerlink" href="#necessary-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">task</span>
+  <span class="n">ifflood</span><span class="o">=.</span><span class="n">true</span><span class="o">.</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>This section represents that we will perform Mixing REMD.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">cntrl</span>
+ <span class="n">imin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ntb</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">igb</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ntpr</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ntwr</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">ntwx</span><span class="o">=</span><span class="mi">10000</span>
+ <span class="n">ntt</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">tempi</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">temp0</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span> <span class="n">ig</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">gamma_ln</span><span class="o">=</span><span class="mf">1.0</span>
+ <span class="n">ntf</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ntc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nstlim</span><span class="o">=</span><span class="mi">100000000</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.002</span><span class="p">,</span> <span class="n">cut</span><span class="o">=</span><span class="mf">999.0</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>This section includes several settings for <strong>regular molecular dynamics sampling</strong>. We performed simlation with
+implicit solvent which is represented by the generalized Born model(<code class="docutils literal notranslate"><span class="pre">igb=8</span></code>). It will print the potential energy and CVs
+which are defined in the input file to <em>“procinfo/procinfo_*txt”</em> every 1000 steps(<code class="docutils literal notranslate"><span class="pre">ntpr=1000</span></code>). It will
+save the trajectory snapshots as <em>“procinfo/traj_*.nc”</em> every 10000 steps(<code class="docutils literal notranslate"><span class="pre">ntwx=10000</span></code>). And each of the replicas will perform
+200000000 MD steps(<code class="docutils literal notranslate"><span class="pre">nstlim=100000000</span></code>) in this simulation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">flood</span>
+  <span class="n">kelvindown</span><span class="o">=</span><span class="mf">300.0</span><span class="p">,</span> <span class="n">kelvinup</span><span class="o">=</span><span class="mf">700.0</span><span class="p">,</span> <span class="n">exchangestep</span><span class="o">=</span><span class="mi">500000</span><span class="p">,</span> <span class="n">biasrep</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">biasexc</span><span class="o">=</span><span class="mi">1</span>
+  <span class="n">ss2cv</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">ssngrid</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">floodingtime</span><span class="o">=</span><span class="mf">10.0</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>This section includes several settings for <strong>Mixing REMD</strong>. We will set several replics at different temperatures in REMD replicas.
+The number of REMD replicas is determined by the number of gpu allocated. In this tutorial, there are 5 GPUs allocated. So FSATOOL will
+assign 3 GPUs to 3 REMD replicas (the other two are assigned to ABMD replica and equilibrium replica) automatically between
+300 <em>K</em> (<code class="docutils literal notranslate"><span class="pre">kelvindown=300</span></code>) to 700 <em>K</em> (<code class="docutils literal notranslate"><span class="pre">kelvinup=700</span></code>). The exchange step between REMD replicas, Equilibrium replica and
+the highest temperature replica is set to 500000 step(<code class="docutils literal notranslate"><span class="pre">exchangestep=500000</span></code>). The other parameters of <strong>Mixing REMD</strong> can see
+<a class="reference external" href="https://fsatool.github.io/fsatool/SamplingModule/Mixing_REMD.html">https://fsatool.github.io/fsatool/SamplingModule/Mixing_REMD.html</a>.</p>
+<p>Now we have prepared all the information for input file. We should submit this task to GPUs for running. Here we provide
+a <a class="reference download internal" download="" href="../_downloads/cb6837b5f5740fb2f2aa0dcfab55759d/job.sh"><code class="xref download docutils literal notranslate"><span class="pre">job.sh</span></code></a> file for submitting this task.</p>
+</div>
+</div>
+<div class="section" id="running-the-simulation">
+<h2>Running the simulation<a class="headerlink" href="#running-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>We have prepared three files for running the simulation: <a class="reference download internal" download="" href="../_downloads/4030622452821f67d138a693f0b4f231/ala.top"><code class="xref download docutils literal notranslate"><span class="pre">ala.top</span></code></a>
+<a class="reference download internal" download="" href="../_downloads/e16a48c21a1223f5ded83f60f8787205/ala.rst"><code class="xref download docutils literal notranslate"><span class="pre">ala.rst</span></code></a> and <a class="reference download internal" download="" href="../_downloads/cb6837b5f5740fb2f2aa0dcfab55759d/job.sh"><code class="xref download docutils literal notranslate"><span class="pre">job.sh</span></code></a>. Now we can submit this task by
+typing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">sbatch</span> <span class="n">job</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Now simulation was start. It will take several hours to run this Mixing REMD. You can download
+the output files by click <a class="reference download internal" download="" href="../_downloads/10f95323677d5b5a94d98ee24012b62a/output_filefiles.rar"><code class="xref download docutils literal notranslate"><span class="pre">Here</span></code></a>.</p>
+</div>
+<div class="section" id="analyze-the-md-results">
+<h2>Analyze the MD results<a class="headerlink" href="#analyze-the-md-results" title="Permalink to this headline">¶</a></h2>
+<p>After the simulation, we will get 5 information files named <code class="docutils literal notranslate"><span class="pre">&quot;procinfo_[0-4].txt&quot;</span></code>, 5 trajectory files named
+<code class="docutils literal notranslate"><span class="pre">&quot;traj_[0-4].mdcrd&quot;</span></code>, 5 collective variable surface files named <code class="docutils literal notranslate"><span class="pre">&quot;surfacedata_[0-4].txt&quot;</span></code> and a <code class="docutils literal notranslate"><span class="pre">&quot;kelvin_exchangerate.txt&quot;</span></code>
+file which recorded the exchange rate between each replica.</p>
+<div class="section" id="output-file-format">
+<h3>Output File Format<a class="headerlink" href="#output-file-format" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><em>procinfo/procinfo_0.txt</em></p></li>
+</ul>
+<p>The information file for each replica</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 24%" />
+<col style="width: 20%" />
+<col style="width: 24%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>time</p></th>
+<th class="head"><p>process index</p></th>
+<th class="head"><p>potential</p></th>
+<th class="head"><p>CV1( <strong>Φ</strong> )</p></th>
+<th class="head"><p>CV2( <strong>Ψ</strong> )</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.002</p></td>
+<td><p>0</p></td>
+<td><p>-23.547</p></td>
+<td><p>-2.585</p></td>
+<td><p>2.897</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.004</p></td>
+<td><p>0</p></td>
+<td><p>-26.371</p></td>
+<td><p>-1.425</p></td>
+<td><p>2.551</p></td>
+</tr>
+<tr class="row-even"><td><p>0.006</p></td>
+<td><p>0</p></td>
+<td><p>-22.924</p></td>
+<td><p>-1.635</p></td>
+<td><p>2.444</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.008</p></td>
+<td><p>0</p></td>
+<td><p>-23.305</p></td>
+<td><p>-1.379</p></td>
+<td><p>2.969</p></td>
+</tr>
+<tr class="row-even"><td><p>0.010</p></td>
+<td><p>0</p></td>
+<td><p>-22.960</p></td>
+<td><p>-2.848</p></td>
+<td><p>2.701</p></td>
+</tr>
+<tr class="row-odd"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><em>procinfo/traj_0.mdcrd</em></p></li>
+</ul>
+<p>The trajectory file for each replica</p>
+<ul class="simple">
+<li><p><em>procinfo/surfacedata_0.txt</em></p></li>
+</ul>
+<p>The collective variable surface of each replica</p>
+<ul class="simple">
+<li><p><em>procinfo/kelvin_exchangerate.txt</em></p></li>
+</ul>
+<p>The exchange rate between each replica</p>
+<p>The output data of Mixing-REMD sampling is collected from each replica. When the exchange happens,
+the temperature at each replica is swapped. If we want to analyze the trajectory in each temperature,
+the trajectory file and information file of Mixing-REMD should be extracted and distribute among
+each temperature.</p>
+</div>
+<div class="section" id="extract-trajectory-and-information-files">
+<h3>Extract trajectory and information files<a class="headerlink" href="#extract-trajectory-and-information-files" title="Permalink to this headline">¶</a></h3>
+<p>The extract module of FSATOOL can extract the trajectory and information files in each temperature from
+Mixing REMD output files automatically. We should provide a input file named <code class="docutils literal notranslate"><span class="pre">&quot;extract.in&quot;</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">trajs</span>
+  <span class="n">num_file</span> <span class="o">=</span> <span class="mi">5</span>
+  <span class="n">procFile</span> <span class="o">=</span> <span class="s2">&quot;../procinfo_0.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;../procinfo_1.txt&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;../procinfo_2.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;../procinfo_3.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;../procinfo_4.txt&quot;</span>
+  <span class="n">ncv</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="n">trajFile</span> <span class="o">=</span> <span class="s2">&quot;../traj_0.mdcrd&quot;</span><span class="p">,</span> <span class="s2">&quot;../traj_1.mdcrd&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;../traj_2.mdcrd&quot;</span><span class="p">,</span> <span class="s2">&quot;../traj_3.mdcrd&quot;</span><span class="p">,</span> <span class="s2">&quot;../traj_4.mdcrd&quot;</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<p>The total number of trajectory or information files is 5(<code class="docutils literal notranslate"><span class="pre">num_file=5</span></code>) and the number of collective variables
+in the “procinfo” file is 2(<code class="docutils literal notranslate"><span class="pre">ncv=2</span></code>). <code class="docutils literal notranslate"><span class="pre">procFile</span></code> and <code class="docutils literal notranslate"><span class="pre">trajFile</span></code> list the name of each trajectory and information files.
+The output process file name is “levelinfo_0.txt” which has same format of “procinfo_0.txt”. The output trajectory file name
+is “level_0.nc” which has same format of “traj_0.mdcrd”</p>
+</div>
+<div class="section" id="the-changes-of-the-cvs">
+<h3>The changes of the CVs<a class="headerlink" href="#the-changes-of-the-cvs" title="Permalink to this headline">¶</a></h3>
+<p>Plot these properties through the simulation using the following commands.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">xmgrace</span> <span class="o">-</span><span class="n">block</span> <span class="n">levelinfo_0</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">bxy</span> <span class="mi">1</span><span class="p">:</span><span class="mi">5</span>
+<span class="o">&gt;</span> <span class="n">xmgrace</span> <span class="o">-</span><span class="n">block</span> <span class="n">levelinfo_0</span><span class="o">.</span><span class="n">txt</span> <span class="o">-</span><span class="n">bxy</span> <span class="mi">1</span><span class="p">:</span><span class="mi">6</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id2">
+<span id="image"></span><a class="reference external image-reference" href="C:\Users\zhz\Pictures\sphinx\Φ.png"><img alt="../_images/Φ.png" src="../_images/Φ.png" /></a>
+<p class="caption"><span class="caption-text">The Φ of Alanine dipeptide</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>You can plot the free energy landscape of Alanine dipeptide at 300K by using a CPPTRAJ
+scripy <a class="reference download internal" download="" href="../_downloads/55b52beec8dab5551cf0e7f39e89dfa4/cpptraj.log"><code class="xref download docutils literal notranslate"><span class="pre">cpptraj.log</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">cppytraj</span> <span class="o">-</span><span class="n">i</span> <span class="n">cpptraj</span><span class="o">.</span><span class="n">log</span> <span class="o">-</span><span class="n">d</span> <span class="n">levelinfo_0</span><span class="o">.</span><span class="n">txt</span>
+<span class="o">&gt;</span> <span class="n">gnuplot</span> <span class="n">free</span><span class="o">.</span><span class="n">gnu</span>
+</pre></div>
+</div>
+<div class="figure align-default" id="id3">
+<a class="reference external image-reference" href="C:\Users\zhz\Pictures\sphinx\free_energy.png"><img alt="../_images/free_energy.png" src="../_images/free_energy.png" /></a>
+<p class="caption"><span class="caption-text">The free_energy landscape of Alanine dipeptide at 300K.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>You can plot the adaptive biasing potential of Alanine dipeptide by using a python
+scripy</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Reference.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, FSATOOL Group
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
